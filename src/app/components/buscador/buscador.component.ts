@@ -20,8 +20,10 @@ export class BuscadorComponent implements OnInit {
   private geoCoder: any;
   ramas: Rama[] = [];
   ramaSeleccionada: number = 0;
-  latitude!: number;
-  longitude!: number;
+  // latitude!: number;
+  // longitude!: number;
+  latitude: number = 50.0740216;
+  longitude: number = 14.4323776;
   distanciaSeleccionada: number = 100;
   limiteDistancia: boolean = false;
   profesores: any[] = [];
@@ -101,7 +103,6 @@ export class BuscadorComponent implements OnInit {
     body.maximaDistancia = this.limiteDistancia ? 1000000000 : this.distanciaSeleccionada;
     let response: any = await this.profesorService.getAll(body);
     this.profesores = response.rows;
-    console.log(this.profesores);
     this.mostrarResultados = true;
   }
   

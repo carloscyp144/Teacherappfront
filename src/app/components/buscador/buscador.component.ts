@@ -14,16 +14,13 @@ import Swal from'sweetalert2';
 })
 export class BuscadorComponent implements OnInit {
 
-  @ViewChild('search')
-  public searchElementRef!: ElementRef;
+  @ViewChild('search') public searchElementRef!: ElementRef;
   
   private geoCoder: any;
   ramas: Rama[] = [];
   ramaSeleccionada: number = 0;
-  // latitude!: number;
-  // longitude!: number;
-  latitude: number = 50.0740216;
-  longitude: number = 14.4323776;
+  latitude!: number;
+  longitude!: number;
   distanciaSeleccionada: number = 100;
   limiteDistancia: boolean = false;
   profesores: any[] = [];

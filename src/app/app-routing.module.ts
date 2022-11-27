@@ -5,11 +5,11 @@ import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.com
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 
 const routes: Routes = [
-  {path:"",pathMatch:"full",redirectTo:"TeacherApp"},
-  {path:"TeacherApp",component:BuscadorComponent},
-  {path:"TeacherApp/iniciar_sesion",component:IniciarSesionComponent},
-  {path:"TeacherApp/crear_cuenta",component:CrearCuentaComponent},
-  {path:"**",redirectTo:"home"},
+  { path:"", pathMatch:"full", redirectTo:"TeacherApp" },
+  { path:"TeacherApp", component: BuscadorComponent },
+  { path:"TeacherApp/iniciar_sesion", component: IniciarSesionComponent },
+  { path:"TeacherApp/crear_cuenta", component: CrearCuentaComponent },
+  { path:"**", redirectTo: "home" },
 ];
 
 @NgModule({

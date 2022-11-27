@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 
 import { environment } from 'src/environments/environment';
+import { PanelComponent } from './components/panel/panel.component';
+import { PanelProfesoresComponent } from './components/panel-profesores/panel-profesores.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { environment } from 'src/environments/environment';
     CrearCuentaComponent,
     ListadoProfesoresComponent,
     MapaProfesoresComponent,
-    FormatoMedidasPipe
+    FormatoMedidasPipe,
+    PanelComponent,
+    PanelProfesoresComponent
   ],
   imports: [
     BrowserModule,

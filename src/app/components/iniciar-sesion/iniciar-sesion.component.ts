@@ -31,19 +31,34 @@ export class IniciarSesionComponent implements OnInit {
       email: User.email,
       password: User.contra
     }
+    console.log(inicio);
     await this.loginService.login_user(inicio)
     .then(response=>{
       localStorage.setItem('token-usuario',response.token);
-      localStorage.setItem('rolId-usuario',response.alumno.rolId);
       localStorage.setItem('email-usuario',response.alumno.email);
-      this.router.navigate(['TeacherApp/profesor/perfil']);
+      if(response.admin){
+        localStorage.setItem('rolId-usuario',"1");
+        this.router.navigate(['TeacherApp/administrador/validar']);
+      }
+      else if(response.alumno){
+        localStorage.setItem('rolId-usuario',"2");
+        this.router.navigate(['TeacherApp/alumno/perfil']);
+      }
+      else if(response.profesor){
+        localStorage.setItem('rolId-usuario',"3");
+        this.router.navigate(['TeacherApp/profesor/perfil']);
+      }
     })
     .catch(err=>{
+      console.log(err);
       if(err.error.errorMessage){
         this.error=err.error.errorMessage;
       }
-      else{
+      else if(err.error.password.msg){
         this.error=err.error.password.msg;
+      }
+      else{
+        console.log(err);
       }
     })
   }

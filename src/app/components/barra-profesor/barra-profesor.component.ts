@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./barra-profesor.component.css']
 })
 export class BarraProfesorComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {

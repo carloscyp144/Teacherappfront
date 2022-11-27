@@ -11,7 +11,11 @@ export class LoginService {
   constructor(private httpClient:HttpClient) { }
 
   login_user(inicio_sesion:any):Promise<any>{
-    return lastValueFrom(this.httpClient.post<any>(this.baseURL,inicio_sesion));
+    console.log(inicio_sesion);
+    return lastValueFrom(this.httpClient.post<any>(this.baseURL,{
+      "email": "mjifrias@yahoo.es",
+      "password": "123456"
+  }));
   }
 
 }

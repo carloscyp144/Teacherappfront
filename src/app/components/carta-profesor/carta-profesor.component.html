@@ -1,0 +1,24 @@
+<div class="card text-center h-100">
+    <img [src]="Profesor.image" class="container rounded-circle mt-4 mb-4"  [alt]="Profesor.nombreCompleto">
+
+    <div class="card-body">
+        <h5 class="card-title">{{Profesor.nombreCompleto}}</h5>
+        <p>{{Profesor.nombreRama}}</p>
+    </div>
+    <div class="card-footer">
+        <form [formGroup]="userForm_opinion">
+            <small class="text-muted">
+                <div class="form-group mt-3">
+                    <label for="opinion">Opinion</label>
+                    <textarea class="form-control" id="opinion" rows="3" placeholder="¿Que te ha parecido tu profesor? Se sincero y educado"></textarea>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="puntuacion">Indica la puntuacion del profesor (0-10)</label>
+                    <input type="number" id="puntuacion" class="form-control" formControlName="puntuacion" placeholder="Introduce la puntacion">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 ms-3 me-3 mb-3">Enviar opinion</button>
+            </small>
+        </form>
+    </div>
+</div>
+<div></div>

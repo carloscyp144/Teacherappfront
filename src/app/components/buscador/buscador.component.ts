@@ -10,9 +10,7 @@ export class BuscadorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localStorage.removeItem('token-usuario');
-    localStorage.removeItem('rolId-usuario');
-    localStorage.removeItem('email-usuario');
+    
   }
 
 }

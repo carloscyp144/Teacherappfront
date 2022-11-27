@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PerfilProfesService } from 'src/app/services/perfil-profes.service';
 
 @Component({
   selector: 'app-profesor-alumnos',
@@ -7,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfesorAlumnosComponent implements OnInit {
 
-  arralumns:any[]=[];
+  arralumnos:any[]=[];
 
-  constructor() { }
+  constructor(
+    private llamadas_profesores:PerfilProfesService
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.llamadas_profesores.alumnos(localStorage.getItem('token-usuario'))
+    .then(response=>{
+      this.arralumnos=response.rows;
+    })
+    .catch(err=>{console.log(err);})
   }
 
 }

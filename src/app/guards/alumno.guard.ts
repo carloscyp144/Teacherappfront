@@ -5,16 +5,16 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfesorGuard implements CanActivate {
-
+export class AlumnoGuard implements CanActivate {
+  
   constructor(
     private router:Router,
   ){}
-
+  
   canActivate ():  boolean | UrlTree {
     let token=localStorage.getItem('token-usuario');
     let tipo_usuario=localStorage.getItem('rolId-usuario');
-    if(token!=null && tipo_usuario=="3"){
+    if(token!=null && tipo_usuario=="2"){
       return true;
     }
     else{

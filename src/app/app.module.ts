@@ -16,6 +16,10 @@ import { BarraProfesorComponent } from './components/barra-profesor/barra-profes
 import { ProfesorAlumnosComponent } from './components/profesor-alumnos/profesor-alumnos.component';
 import { ProfesorPerfilComponent } from './components/profesor-perfil/profesor-perfil.component';
 import { CartaAlumnoComponent } from './components/carta-alumno/carta-alumno.component';
+import { AlumnoPerfilComponent } from './components/alumno-perfil/alumno-perfil.component';
+import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.component';
+import { BarraAlumnoComponent } from './components/barra-alumno/barra-alumno.component';
+import { CartaProfesorComponent } from './components/carta-profesor/carta-profesor.component';
 
 
 
@@ -31,7 +35,11 @@ import { CartaAlumnoComponent } from './components/carta-alumno/carta-alumno.com
     BarraProfesorComponent,
     ProfesorAlumnosComponent,
     ProfesorPerfilComponent,
-    CartaAlumnoComponent
+    CartaAlumnoComponent,
+    AlumnoPerfilComponent,
+    AlumnoOpinarComponent,
+    BarraAlumnoComponent,
+    CartaProfesorComponent
   ],
   imports: [
     BrowserModule,

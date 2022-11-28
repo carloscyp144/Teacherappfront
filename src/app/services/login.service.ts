@@ -12,7 +12,7 @@ export class LoginService {
 
   login_user(inicio_sesion:any):Promise<any>{
     console.log(inicio_sesion);
-    return firstValueFrom(this.httpClient.post<any>(this.baseURL,inicio_sesion));
+    return lastValueFrom(this.httpClient.post<any>(this.baseURL,inicio_sesion));
   }
 
 }

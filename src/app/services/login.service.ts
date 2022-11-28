@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,7 @@ export class LoginService {
 
   login_user(inicio_sesion:any):Promise<any>{
     console.log(inicio_sesion);
-    return lastValueFrom(this.httpClient.post<any>(this.baseURL,{
-      "email": "mjifrias@yahoo.es",
-      "password": "123456"
-  }));
+    return firstValueFrom(this.httpClient.post<any>(this.baseURL,inicio_sesion));
   }
 
 }

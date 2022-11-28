@@ -35,17 +35,19 @@ export class IniciarSesionComponent implements OnInit {
     await this.loginService.login_user(inicio)
     .then(response=>{
       localStorage.setItem('token-usuario',response.token);
-      localStorage.setItem('email-usuario',response.alumno.email);
       if(response.admin){
         localStorage.setItem('rolId-usuario',"1");
+        localStorage.setItem('email-usuario',response.admin.email);
         this.router.navigate(['TeacherApp/administrador/validar']);
       }
       else if(response.alumno){
         localStorage.setItem('rolId-usuario',"2");
+        localStorage.setItem('email-usuario',response.alumno.email);
         this.router.navigate(['TeacherApp/alumno/perfil']);
       }
       else if(response.profesor){
         localStorage.setItem('rolId-usuario',"3");
+        localStorage.setItem('email-usuario',response.profesor.email);
         this.router.navigate(['TeacherApp/profesor/perfil']);
       }
     })

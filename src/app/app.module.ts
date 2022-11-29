@@ -3,13 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
+
 import { AppComponent } from './app.component';
 import { CabeceraComponent } from './components/cabecera/cabecera.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
+
+import { ListadoProfesoresComponent } from './components/listado-profesores/listado-profesores.component';
+import { MapaProfesoresComponent } from './components/mapa-profesores/mapa-profesores.component';
+import { FormsModule } from '@angular/forms';
+
+import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
+
+import { environment } from 'src/environments/environment';
+
 import { CrearAlumnoComponent } from './components/crear-alumno/crear-alumno.component';
 import { CrearProfesorComponent } from './components/crear-profesor/crear-profesor.component';
 import { BarraProfesorComponent } from './components/barra-profesor/barra-profesor.component';
@@ -21,8 +32,6 @@ import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.
 import { BarraAlumnoComponent } from './components/barra-alumno/barra-alumno.component';
 import { CartaProfesorComponent } from './components/carta-profesor/carta-profesor.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +39,9 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
     BuscadorComponent,
     IniciarSesionComponent,
     CrearCuentaComponent,
+    ListadoProfesoresComponent,
+    MapaProfesoresComponent,
+    FormatoMedidasPipe
     CrearAlumnoComponent,
     CrearProfesorComponent,
     BarraProfesorComponent,
@@ -44,7 +56,12 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.GOOGLE_API_KEY,
+      libraries: ['places']
+    })
     ReactiveFormsModule, //Formularios
     FormsModule //NgModul
   ],

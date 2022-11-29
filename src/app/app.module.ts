@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
@@ -15,11 +14,12 @@ import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.com
 
 import { ListadoProfesoresComponent } from './components/listado-profesores/listado-profesores.component';
 import { MapaProfesoresComponent } from './components/mapa-profesores/mapa-profesores.component';
-import { FormsModule } from '@angular/forms';
 
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 
 import { environment } from 'src/environments/environment';
+import { PanelComponent } from './components/panel/panel.component';
+import { PanelProfesoresComponent } from './components/panel-profesores/panel-profesores.component';
 
 import { CrearAlumnoComponent } from './components/crear-alumno/crear-alumno.component';
 import { CrearProfesorComponent } from './components/crear-profesor/crear-profesor.component';
@@ -41,7 +41,7 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
     CrearCuentaComponent,
     ListadoProfesoresComponent,
     MapaProfesoresComponent,
-    FormatoMedidasPipe
+    FormatoMedidasPipe,
     CrearAlumnoComponent,
     CrearProfesorComponent,
     BarraProfesorComponent,
@@ -51,7 +51,9 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
     AlumnoPerfilComponent,
     AlumnoOpinarComponent,
     BarraAlumnoComponent,
-    CartaProfesorComponent
+    CartaProfesorComponent,
+    PanelComponent,
+    PanelProfesoresComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
     AgmCoreModule.forRoot({
       apiKey: environment.GOOGLE_API_KEY,
       libraries: ['places']
-    })
+    }),
     ReactiveFormsModule, //Formularios
     FormsModule //NgModul
   ],

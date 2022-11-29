@@ -7,6 +7,8 @@ import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.com
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { ProfesorAlumnosComponent } from './components/profesor-alumnos/profesor-alumnos.component';
 import { ProfesorPerfilComponent } from './components/profesor-perfil/profesor-perfil.component';
+import { PanelProfesoresComponent } from './components/panel-profesores/panel-profesores.component';
+import { PanelComponent } from './components/panel/panel.component';
 import { AlumnoGuard } from './guards/alumno.guard';
 import { ProfesorGuard } from './guards/profesor.guard';
 
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path:"TeacherApp/profesor/alumnos",component:ProfesorAlumnosComponent,canActivate:[ProfesorGuard]},
   {path:"TeacherApp/alumno/perfil",component:AlumnoPerfilComponent,canActivate:[AlumnoGuard]},
   {path:"TeacherApp/alumno/opinar",component:AlumnoOpinarComponent,canActivate:[AlumnoGuard]},
-  {path:"**",redirectTo:"home"},
+  { path:"TeacherApp/panel", component: PanelComponent },
+  { path:"TeacherApp/panel-profesores", component: PanelProfesoresComponent },
+  {path:"**",redirectTo:"home"}
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
   <div class="accordion" id="accordionBuscador">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingAccordion">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button #searchButton class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           Buscador
         </button>
       </h2>
@@ -55,7 +55,7 @@
  
             <div class="p-1 col-12 mt-2">
               <div class="form-group text-center">
-                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" (click)="buscarProfesores()">Buscar profesor</button>
+                <button class="btn btn-primary" (click)="buscarProfesores()">Buscar profesor</button>
               </div>
             </div>
             

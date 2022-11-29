@@ -15,6 +15,8 @@ import Swal from'sweetalert2';
 export class BuscadorComponent implements OnInit {
 
   @ViewChild('search') public searchElementRef!: ElementRef;
+  @ViewChild('searchButton') searchButton!: ElementRef;
+
   
   private geoCoder: any;
   ramas: Rama[] = [];
@@ -99,6 +101,7 @@ export class BuscadorComponent implements OnInit {
     body.longitud = this.longitude;
     body.maximaDistancia = this.limiteDistancia ? 1000000000 : this.distanciaSeleccionada;
     let response: any = await this.profesorService.getAll(body);
+    this.searchButton.nativeElement.click();
     this.profesores = response.rows;
     this.mostrarResultados = true;
   }

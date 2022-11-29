@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrearCuentaComponent implements OnInit {
 
-  constructor() { }
+  opcion_alumno_profe:string;
+  constructor() {
+    this.opcion_alumno_profe='¿Eres profesor o alumno?';
+    
+  }
+  opcion_profesor():boolean {
+    return this.opcion_alumno_profe=="Profesor";
+  }
 
   ngOnInit(): void {
   }

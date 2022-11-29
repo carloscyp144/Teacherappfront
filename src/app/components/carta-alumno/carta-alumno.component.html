@@ -1,0 +1,16 @@
+<div class="card text-center h-100">
+    <img [src]="Alumno.image" class="container rounded-circle mt-4 mb-4"  [alt]="Alumno.nombreCompleto">
+
+    <div class="card-body">
+        <h5 class="card-title">{{Alumno.nombreCompleto}}</h5>
+        <p>{{Alumno.email}}</p>
+    </div>
+    <div class="card-footer">
+        <form [formGroup]="userForm_aceptar">
+            <small class="text-muted">
+                <button type="submit" class="btn btn-primary mt-3 ms-3 me-3 mb-3">Aceptar alumno</button>
+            </small>
+        </form>
+    </div>
+</div>
+<div></div>

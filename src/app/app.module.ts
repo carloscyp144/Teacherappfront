@@ -5,22 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AgmCoreModule } from '@agm/core';
-
+// Componentes
 import { AppComponent } from './app.component';
 import { CabeceraComponent } from './components/cabecera/cabecera.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
-
 import { ListadoProfesoresComponent } from './components/listado-profesores/listado-profesores.component';
 import { MapaProfesoresComponent } from './components/mapa-profesores/mapa-profesores.component';
-
-import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
-
-import { environment } from 'src/environments/environment';
 import { PanelComponent } from './components/panel/panel.component';
 import { PanelProfesoresComponent } from './components/panel-profesores/panel-profesores.component';
-
 import { CrearAlumnoComponent } from './components/crear-alumno/crear-alumno.component';
 import { CrearProfesorComponent } from './components/crear-profesor/crear-profesor.component';
 import { BarraProfesorComponent } from './components/barra-profesor/barra-profesor.component';
@@ -31,6 +25,11 @@ import { AlumnoPerfilComponent } from './components/alumno-perfil/alumno-perfil.
 import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.component';
 import { BarraAlumnoComponent } from './components/barra-alumno/barra-alumno.component';
 import { CartaProfesorComponent } from './components/carta-profesor/carta-profesor.component';
+import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.component';
+// Pipes
+import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
+// Entorno
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,8 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
     BarraAlumnoComponent,
     CartaProfesorComponent,
     PanelComponent,
-    PanelProfesoresComponent
+    PanelProfesoresComponent,
+    PanelAlumnosComponent
   ],
   imports: [
     BrowserModule,

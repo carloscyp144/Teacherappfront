@@ -1,5 +1,7 @@
 import { ReturnStatement } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cabecera',
@@ -11,7 +13,10 @@ export class CabeceraComponent implements OnInit {
   @ViewChild('navbarCollapse') navbarCollapse!: ElementRef;
   @ViewChild('buttonCollapse') buttonCollapse!: ElementRef;
 
-  constructor() { }
+  constructor(
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -25,6 +30,11 @@ export class CabeceraComponent implements OnInit {
         this.buttonCollapse.nativeElement.click();
       }
     }))
+  }
+
+  cerrarSesion() {
+    this.localStorageService.deleteData();
+    this.router.navigate(['/TeacherApp'])
   }
 
 }

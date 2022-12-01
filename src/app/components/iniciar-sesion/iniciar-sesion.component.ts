@@ -26,6 +26,10 @@ export class IniciarSesionComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+
+  }
+
   async logearse(): Promise<void> {
     let User = this.userForm_inicio.value;
     let inicio = {
@@ -46,7 +50,7 @@ export class IniciarSesionComponent implements OnInit {
           email = response.profesor.email;
         }
         this.localStorageService.saveData(response.token, rolId, email);
-        this.router.navigate(['TeacherApp']);
+        window.location.href = '/TeacherApp';
       })
       .catch(err => {
         if (err.error.errorMessage) {
@@ -58,10 +62,6 @@ export class IniciarSesionComponent implements OnInit {
         }
         console.log(this.error);
       });
-  }
-
-  ngOnInit(): void {
-
   }
 
 }

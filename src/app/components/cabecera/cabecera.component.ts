@@ -16,8 +16,24 @@ export class CabeceraComponent implements OnInit {
   token: string | null = null;
   rolId: string | null = null;
   email: string | null = null;
-
-  variable!: string;
+  menu: any;
+  menuOptions = [
+    { type: 'admin', options: [
+      { type: 'link', name: 'Perfil', link: ''},
+      { type: 'link', name: 'Gestionar profesores', link: '/TeacherApp/admin/profesores'},
+      { type: 'link', name: 'Gestionar alumnos', link: '/TeacherApp/admin/alumnos'}
+    ]},
+    { type: 'alumno', options: [
+      { type: 'link', name: 'Perfil', link: 'TeacherApp/alumno/perfil'},
+      { type: 'link', name: 'Opinar', link: 'TeacherApp/alumno/opinar'},
+      { type: 'link', name: 'Mensajes', link: ''}
+    ]  },
+    { type: 'profesor', options: [
+      { type: 'link', name: 'Perfil', link: 'TeacherApp/profesor/alumnos'},
+      { type: 'link', name: 'Alumnos', link: 'TeacherApp/profesor/alumnos'},
+      { type: 'link', name: 'Mensajes', link: ''}
+    ] }
+  ]
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -26,6 +42,7 @@ export class CabeceraComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocalStorage();
+    this.loadMenu();
   }
 
   ngAfterViewInit(): void {
@@ -38,21 +55,27 @@ export class CabeceraComponent implements OnInit {
     }));
   }
 
-  cerrarSesion() {
+  cerrarSesion(): void {
     this.localStorageService.deleteData();
     this.token = null;
     this.rolId = null;
     this.email = null;
     window.location.reload();
-    window.location.href = '/TeacherApp'
+    window.location.href = '/TeacherApp/buscador'
   }
 
-  getLocalStorage() {
+  getLocalStorage(): void {
     let localStorage = this.localStorageService.getData();
     if (localStorage.token) {
       this.token = localStorage.token;
       this.rolId = localStorage.rolId;
       this.email = localStorage.email;
+    }
+  }
+
+  loadMenu(): void {
+    if (this.token && this.rolId) {
+      this.menu = this.menuOptions[Number(this.rolId) - 1].options;
     }
   }
 

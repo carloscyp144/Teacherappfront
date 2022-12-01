@@ -13,20 +13,21 @@ import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.
 // Guards
 import { AlumnoGuard } from './guards/alumno.guard';
 import { ProfesorGuard } from './guards/profesor.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
-  { path:"", pathMatch:"full", redirectTo:"TeacherApp" },
-  { path:"TeacherApp", component:BuscadorComponent },
-  { path:"TeacherApp/iniciar_sesion", component:IniciarSesionComponent },
-  { path:"TeacherApp/crear_cuenta", component:CrearCuentaComponent },
-  { path:"TeacherApp/profesor/perfil", component:ProfesorPerfilComponent, canActivate:[ProfesorGuard] },
-  { path:"TeacherApp/profesor/alumnos", component:ProfesorAlumnosComponent, canActivate:[ProfesorGuard] },
-  { path:"TeacherApp/alumno/perfil", component:AlumnoPerfilComponent, canActivate:[AlumnoGuard] },
-  { path:"TeacherApp/alumno/opinar", component:AlumnoOpinarComponent,canActivate:[AlumnoGuard] },
-  { path:"TeacherApp/admin/profesores", component: PanelProfesoresComponent },
-  { path:"TeacherApp/admin/alumnos", component: PanelAlumnosComponent },
-  { path:"**", redirectTo:"home" }
+  { path: "", pathMatch: "full", redirectTo: "TeacherApp/buscador" },
+  { path: "TeacherApp/buscador", component:BuscadorComponent },
+  { path: "TeacherApp/iniciar_sesion", component:IniciarSesionComponent },
+  { path: "TeacherApp/crear_cuenta", component:CrearCuentaComponent },
+  { path: "TeacherApp/profesor/perfil", component:ProfesorPerfilComponent, canActivate:[ProfesorGuard] },
+  { path: "TeacherApp/profesor/alumnos", component:ProfesorAlumnosComponent, canActivate:[ProfesorGuard] },
+  { path: "TeacherApp/alumno/perfil", component:AlumnoPerfilComponent, canActivate:[AlumnoGuard] },
+  { path: "TeacherApp/alumno/opinar", component:AlumnoOpinarComponent, canActivate:[AlumnoGuard] },
+  { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate:[AdminGuard] },
+  { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate:[AdminGuard] },
+  { path: "**", redirectTo: "home" }
 ];
 
 @NgModule({

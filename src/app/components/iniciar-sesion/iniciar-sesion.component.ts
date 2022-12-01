@@ -50,7 +50,7 @@ export class IniciarSesionComponent implements OnInit {
           email = response.profesor.email;
         }
         this.localStorageService.saveData(response.token, rolId, email);
-        window.location.href = '/TeacherApp';
+        window.location.href = '/TeacherApp/buscador';
       })
       .catch(err => {
         if (err.error.errorMessage) {

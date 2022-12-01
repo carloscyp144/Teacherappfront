@@ -67,7 +67,9 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule, //Formularios
     FormsModule //NgModul
   ],
-  providers: [],
+  providers: [
+    FormatoMedidasPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

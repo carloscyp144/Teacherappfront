@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormatoMedidasPipe } from 'src/app/pipes/formato-medidas.pipe';
 import { ProfesorService } from 'src/app/services/profesor.service';
+
 
 import Swal from'sweetalert2';
 
@@ -19,7 +21,8 @@ export class PanelProfesoresComponent implements OnInit {
   buscarProfesor: string = "";
 
   constructor(
-    private profesorService: ProfesorService
+    private profesorService: ProfesorService,
+    private pipeMedidas: FormatoMedidasPipe
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +32,6 @@ export class PanelProfesoresComponent implements OnInit {
   async obtenerProfesores() {
     let response: any = await this.profesorService.getAllPrivate({});
     this.profesores = response.rows;
-    console.log(this.profesores);
     this.busquedaProfesores = this.profesores;
     this.ultimaPagina = Math.ceil(this.profesores.length / 10);
     this.paginacion = Array(this.ultimaPagina);
@@ -55,60 +57,63 @@ export class PanelProfesoresComponent implements OnInit {
 
   activarProfesor(profesorId: number) {
     let profesor = this.profesores.find((profesor: any) => profesor.id === profesorId);
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success ms-2',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-    
-    swalWithBootstrapButtons.fire({
+    let alertData = {
       title: 'Validación de profesor',
-      html: "¿Quieres validar al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio</th><td>"+profesor.precioHora+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
-      showCancelButton: true,
+      html: "¿Quieres validar al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio/Hora</th><td>"+this.pipeMedidas.transform(Number(profesor.precioHora), '€')+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
       confirmButtonText: 'Si, validar',
-      cancelButtonText: 'No, cancelar',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        profesor.validado = 1;
-        swalWithBootstrapButtons.fire(
-          'Validado correctamente',
-          'El profesor <b>'+profesor.nombreCompleto+'</b> ya está disponible en el buscador de profesores.',
-          'success'
-        )
+      success: {
+        title: 'Validado correctamente',
+        html: 'El profesor <b>'+profesor.nombreCompleto+'</b> ya está disponible en el buscador de profesores.'
       }
-    })
+    }
+    this.showAlert(profesor, alertData, () => { 
+      profesor.validado = 1; 
+      this.profesorService.validate(profesor.id);
+    });
   }
 
   bloquearProfesor(profesorId: number) {
     let profesor = this.profesores.find((profesor: any) => profesor.id === profesorId);
+    let alertData = {
+      title: 'Bloqueo de profesor',
+      html: "¿Quieres bloquear al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio/Hora</th><td>"+this.pipeMedidas.transform(Number(profesor.precioHora), '€')+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
+      confirmButtonText: 'Si, bloquear',
+      success: {
+        title: 'Bloqueado correctamente',
+        html: 'El profesor <b>'+profesor.nombreCompleto+'</b> ha sido bloqueado.'
+      }
+    }
+    this.showAlert(profesor, alertData, () => { 
+      profesor.validado = 0; 
+      this.profesorService.lock(profesor.id);
+    });
+  }
+
+  showAlert (profesor: any, alertData: any, callback: Function) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success ms-2',
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
-    
+    });
     swalWithBootstrapButtons.fire({
-      title: 'Bloqueo de profesor',
-      html: "¿Quieres bloquear al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio</th><td>"+profesor.precioHora+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
+      title: alertData.title,
+      html: alertData.html,
       showCancelButton: true,
-      confirmButtonText: 'Si, bloquear',
+      confirmButtonText: alertData.confirmButtonText,
       cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        profesor.validado = 0;
+        callback();
         swalWithBootstrapButtons.fire(
-          'Bloqueado correctamente',
-          'El profesor <b>'+profesor.nombreCompleto+'</b> ha sido bloqueado.',
+          alertData.success.title,
+          alertData.success.html,
           'success'
         )
       }
-    })
+    });
   }
 
 }

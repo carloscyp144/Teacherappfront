@@ -76,7 +76,7 @@ export class PanelProfesoresComponent implements OnInit {
     let profesor = this.profesores.find((profesor: any) => profesor.id === profesorId);
     let alertData = {
       title: 'Bloqueo de profesor',
-      html: "¿Quieres bloquear al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio/Hora</th><td>"+this.pipeMedidas.transform(Number(profesor.precioHora), '€')+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
+      html: "¿Quieres bloquear al profesor <b>"+profesor.nombreCompleto+"</b>? <table class='table align-middle table-bordered mt-3'> <tr><th>Rama</th><td>"+profesor.nombreRama+"</td></tr><tr> <th>Descripción</th><td>"+profesor.descripcion+"</td></tr> <tr><th>Precio/Hora</th><td>"+this.pipeMedidas.transform(profesor.precioHora, '€')+"</td></tr> <tr><th>Experiencia</th><td>"+profesor.experiencia+"</td></tr></table>",
       confirmButtonText: 'Si, bloquear',
       success: {
         title: 'Bloqueado correctamente',

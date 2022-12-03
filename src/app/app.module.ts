@@ -26,6 +26,7 @@ import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.
 import { BarraAlumnoComponent } from './components/barra-alumno/barra-alumno.component';
 import { CartaProfesorComponent } from './components/carta-profesor/carta-profesor.component';
 import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.component';
+import { InfoProfesorComponent } from './components/info-profesor/info-profesor.component';
 // Pipes
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
@@ -53,7 +54,8 @@ import { environment } from 'src/environments/environment';
     CartaProfesorComponent,
     PanelComponent,
     PanelProfesoresComponent,
-    PanelAlumnosComponent
+    PanelAlumnosComponent,
+    InfoProfesorComponent
   ],
   imports: [
     BrowserModule,

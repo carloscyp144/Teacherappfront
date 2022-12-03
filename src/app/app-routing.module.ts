@@ -5,6 +5,7 @@ import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.
 import { AlumnoPerfilComponent } from './components/alumno-perfil/alumno-perfil.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
+import { InfoProfesorComponent } from './components/info-profesor/info-profesor.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { ProfesorAlumnosComponent } from './components/profesor-alumnos/profesor-alumnos.component';
 import { ProfesorPerfilComponent } from './components/profesor-perfil/profesor-perfil.component';
@@ -18,15 +19,16 @@ import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "TeacherApp/buscador" },
-  { path: "TeacherApp/buscador", component:BuscadorComponent },
-  { path: "TeacherApp/iniciar_sesion", component:IniciarSesionComponent },
-  { path: "TeacherApp/crear_cuenta", component:CrearCuentaComponent },
-  { path: "TeacherApp/profesor/perfil", component:ProfesorPerfilComponent, canActivate:[ProfesorGuard] },
-  { path: "TeacherApp/profesor/alumnos", component:ProfesorAlumnosComponent, canActivate:[ProfesorGuard] },
-  { path: "TeacherApp/alumno/perfil", component:AlumnoPerfilComponent, canActivate:[AlumnoGuard] },
-  { path: "TeacherApp/alumno/opinar", component:AlumnoOpinarComponent, canActivate:[AlumnoGuard] },
-  { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate:[AdminGuard] },
-  { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate:[AdminGuard] },
+  { path: "TeacherApp/buscador", component: BuscadorComponent },
+  { path: "TeacherApp/iniciar_sesion", component: IniciarSesionComponent },
+  { path: "TeacherApp/crear_cuenta", component: CrearCuentaComponent },
+  { path: "TeacherApp/info-profesor/:profesorId", component: InfoProfesorComponent },
+  { path: "TeacherApp/profesor/perfil", component: ProfesorPerfilComponent, canActivate: [ProfesorGuard] },
+  { path: "TeacherApp/profesor/alumnos", component: ProfesorAlumnosComponent, canActivate: [ProfesorGuard] },
+  { path: "TeacherApp/alumno/perfil", component: AlumnoPerfilComponent, canActivate: [AlumnoGuard] },
+  { path: "TeacherApp/alumno/opinar", component: AlumnoOpinarComponent, canActivate: [AlumnoGuard] },
+  { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate: [AdminGuard] },
+  { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate: [AdminGuard] },
   { path: "**", redirectTo: "home" }
 ];
 

@@ -22,8 +22,12 @@ export class ProfesorService {
     return headers;
   }
 
-  getAll(body: any): Promise<any> {
+  getAll(body: any, token = false): Promise<any> {
     let headers = this.configHeaders();
+    if(token) {
+      let localStorage: any = this.localStorageService.getData();
+      headers = headers.set('Authorization', localStorage.token);
+    }
     return lastValueFrom(this.http.post<any>(`${this.base_url}/api/public/profesores/getSearch`, body,{ headers }));
   }
 

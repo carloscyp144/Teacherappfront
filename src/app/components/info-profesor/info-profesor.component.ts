@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InscripcionesService } from 'src/app/services/inscripciones.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { OpinionesService } from 'src/app/services/opiniones.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+
+import Swal from'sweetalert2';
 
 @Component({
   selector: 'app-info-profesor',
@@ -18,12 +21,16 @@ export class InfoProfesorComponent implements OnInit {
   profesor: any;
   opiniones: any[] = [];
 
+  btnInscribirseTxt: string = 'Inscribirse';
+  btnInscribirseEnable: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private localStorageService: LocalStorageService,
     private profesorService: ProfesorService,
     private opinionesService: OpinionesService,
-    private router: Router
+    private router: Router,
+    private inscripcionesService: InscripcionesService
   ) { }
 
   ngOnInit(): void {
@@ -49,7 +56,25 @@ export class InfoProfesorComponent implements OnInit {
       this.router.navigate(['TeacherApp/buscador']);
       return;
     }
+    this.getInscripcion(profesorId);
     this.getOpiniones(profesorId);
+  }
+
+  async getInscripcion(profesorId: number) {
+    let body: any = {
+      "searchConditions": [
+        {
+          "column": "profesoresId",
+          "operator": "=",
+          "value": profesorId
+        }
+      ]
+    };
+    let response = await this.inscripcionesService.getInscripcionesAlumno(body);
+    if (response.rows.length > 0) {
+      this.btnInscribirseTxt = 'Ya estás suscrito';
+      this.btnInscribirseEnable = true;
+    }
   }
 
   getLocalStorage(): void {
@@ -69,14 +94,42 @@ export class InfoProfesorComponent implements OnInit {
     this.opiniones = response.rows;
   }
 
-  stars(puntuacion: number): string {
-    let starComplete = '<i class="fa-solid fa-star"></i>';
-    let starHalf = '<i class="fa-solid fa-star-half-stroke"></i>';
-    let starEmpty = '<i class="fa-regular fa-star"></i>';
+  getStars(puntuacion: number, type: string): Array<number> {
     let complete = Math.trunc(puntuacion / 2);
     let half = puntuacion % 2;
     let empty = 5 - (complete + half);
-    return `${starComplete.repeat(complete)}${starHalf.repeat(half)}${starEmpty.repeat(empty)}`;
+    let out = [];
+    switch (type) {
+      case 'complete':
+        out = new Array(complete).fill(1);
+        break;
+      case 'half':
+        out = new Array(half).fill(1);
+        break;
+      case 'empty':
+        out = new Array(empty).fill(1);
+        break;
+    }
+    return out;
+  }
+
+  async inscribirse() {
+    await this.inscripcionesService.inscribirAlumno(this.profesor.id)
+      .then( response => {
+        this.getInscripcion(this.profesor.id);
+        Swal.fire(
+          'Inscripción realizada correctamente',
+          'Ya eres alumno de '+this.profesor.nombreCompleto,
+          'success'
+        );
+      })
+      .catch((err) => {
+        Swal.fire(
+          'Error',
+          err.error.messageError,
+          'error'
+        );
+      });
   }
 
 }

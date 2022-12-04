@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormatoMedidasPipe } from 'src/app/pipes/formato-medidas.pipe';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
-
 import Swal from'sweetalert2';
 
 @Component({

@@ -34,8 +34,4 @@ export class ListadoProfesoresComponent implements OnInit {
     }
   }
 
-  verMas(profesorId: number): void {
-    this.router.navigate([`TeacherApp/info-profesor/${profesorId}`]);
-  }
-
 }

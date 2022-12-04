@@ -19,7 +19,7 @@
         <p class="card-text mb-0">Precio/Hora: {{ profesor.precioHora | formatoMedidas: '€' }}</p>
         <p class="card-text mb-0">Experiencia: {{ profesor.experiencia }}</p>
         <p class="card-text">Distancia: {{ profesor.distancia | formatoMedidas: 'Kms' }}</p>
-        <a *ngIf="token" (click)="verMas(profesor.id)" class="btn btn-primary">Ver más</a>
+        <a *ngIf="token" [href]="'TeacherApp/info-profesor/'+profesor.id" class="btn btn-primary" target="_blank">Ver más</a>
       </div>
     </div>
 

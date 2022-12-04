@@ -3,7 +3,7 @@
 
     <div class="d-flex flex-column col-12 col-md-6">
       <img class="img-profesor rounded rounded-circle p-3" [src]="profesor.imagen || 'https://eu.ui-avatars.com/api/?name='+profesor.nombreCompleto+'&size=250'" [alt]="profesor.nombreCompleto">
-      <button class="btn btn-primary mt-3">Inscribirse</button>
+      <button class="btn btn-primary mt-3" (click)="inscribirse()" [disabled]="btnInscribirseEnable">{{ btnInscribirseTxt }}</button>
     </div>
 
     <div class="d-flex flex-column col-12 col-md-6 mt-3">
@@ -25,9 +25,13 @@
     </div>
 
     <div class="col-12 mt-5" *ngIf="opiniones.length > 0">
-      <h3>Opiniones</h3>
+      <h3>Opiniones</h3>      
       <div class="d-flex flex-column col-12 mt-3" *ngFor="let opinion of opiniones">
-        <div [innerHtml]="stars(opinion.puntuacion)"></div>
+        <div>
+          <i class="fa-solid fa-star" *ngFor="let start of getStars(opinion.puntuacion, 'complete')"></i>
+          <i class="fa-solid fa-star-half-stroke" *ngFor="let start of getStars(opinion.puntuacion, 'half')"></i>
+          <i class="fa-regular fa-star" *ngFor="let start of getStars(opinion.puntuacion, 'empty')"></i>
+        </div>
         <h5 class="fst-italic mb-0">{{ opinion.comentario }}</h5>
         <span class="text-muted"><small>{{ opinion.fechaPuntuacion.substr(0, 10) }}</small></span>
       </div>

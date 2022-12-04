@@ -19,7 +19,7 @@
           <div>
             <h6 class="mb-0">
               {{ profesor.nombreCompleto }} 
-              <a *ngIf="token" (click)="verMas(profesor.id)" class="btn btn-sm btn-primary">Ver más</a>
+              <a *ngIf="token" [href]="'TeacherApp/info-profesor/'+profesor.id" class="btn btn-sm btn-primary">Ver más</a>
             </h6>
           </div>
           <div><strong>{{ profesor.nombreRama }}</strong></div>

@@ -36,8 +36,4 @@ export class MapaProfesoresComponent implements OnInit {
     }
   }
 
-  verMas(profesorId: number): void {
-    this.router.navigate([`TeacherApp/info-profesor/${profesorId}`]);
-  }
-
 }

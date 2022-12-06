@@ -1,18 +1,18 @@
 <div class="container">
   <div class="row pb-5" *ngIf="profesor">
 
-    <div class="d-flex flex-column col-12 col-md-6">
+    <div class="d-flex flex-column col-12 col-md-6 col-lg-4">
       <img class="img-profesor rounded rounded-circle p-3" [src]="profesor.imagen || 'https://eu.ui-avatars.com/api/?name='+profesor.nombreCompleto+'&size=250'" [alt]="profesor.nombreCompleto">
       <button class="btn btn-primary mt-3" (click)="inscribirse()" [disabled]="btnInscribirseEnable">{{ btnInscribirseTxt }}</button>
     </div>
 
-    <div class="d-flex flex-column col-12 col-md-6 mt-3">
+    <div class="d-flex flex-column justify-content-center col-12 col-md-6 col-lg-4 mt-3">
       <h2>{{ profesor.nombreCompleto }}</h2>
       <h5>{{ profesor.nombreRama }}</h5>
       <span>{{ profesor.descripcion }}</span>
     </div>
 
-    <div class="d-flex flex-column col-12 mt-3">
+    <div class="d-flex flex-column justify-content-center col-12 col-lg-4 mt-3">
       <span>Precio/Hora: {{ profesor.precioHora | formatoMedidas: '€' }}</span>
       <span>Teléfono: {{ profesor.telefono }}</span>
       <span>Email: {{ profesor.email }}</span>

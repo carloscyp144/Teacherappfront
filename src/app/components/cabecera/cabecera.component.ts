@@ -19,7 +19,7 @@ export class CabeceraComponent implements OnInit {
   menu: any;
   menuOptions = [
     { type: 'admin', options: [
-      { type: 'link', name: 'Perfil', link: ''},
+      { type: 'link', name: 'Perfil', link: '/TeacherApp/admin/perfil'},
       { type: 'link', name: 'Gestionar profesores', link: '/TeacherApp/admin/profesores'},
       { type: 'link', name: 'Gestionar alumnos', link: '/TeacherApp/admin/alumnos'}
     ]},

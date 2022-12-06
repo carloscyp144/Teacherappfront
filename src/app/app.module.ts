@@ -31,6 +31,7 @@ import { InfoProfesorComponent } from './components/info-profesor/info-profesor.
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
 import { environment } from 'src/environments/environment';
+import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { environment } from 'src/environments/environment';
     PanelComponent,
     PanelProfesoresComponent,
     PanelAlumnosComponent,
-    InfoProfesorComponent
+    InfoProfesorComponent,
+    AdminPerfilComponent
   ],
   imports: [
     BrowserModule,

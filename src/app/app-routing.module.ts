@@ -11,6 +11,7 @@ import { ProfesorAlumnosComponent } from './components/profesor-alumnos/profesor
 import { ProfesorPerfilComponent } from './components/profesor-perfil/profesor-perfil.component';
 import { PanelProfesoresComponent } from './components/panel-profesores/panel-profesores.component';
 import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.component';
+import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.component';
 // Guards
 import { AlumnoGuard } from './guards/alumno.guard';
 import { ProfesorGuard } from './guards/profesor.guard';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: "TeacherApp/profesor/alumnos", component: ProfesorAlumnosComponent, canActivate: [ProfesorGuard] },
   { path: "TeacherApp/alumno/perfil", component: AlumnoPerfilComponent, canActivate: [AlumnoGuard] },
   { path: "TeacherApp/alumno/opinar", component: AlumnoOpinarComponent, canActivate: [AlumnoGuard] },
+  { path: "TeacherApp/admin/perfil", component: AdminPerfilComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate: [AdminGuard] },
   { path: "**", redirectTo: "home" }

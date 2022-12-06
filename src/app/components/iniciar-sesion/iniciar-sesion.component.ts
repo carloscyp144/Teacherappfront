@@ -15,7 +15,7 @@ export class IniciarSesionComponent implements OnInit {
   error: String;
   constructor(
     private loginService:LoginService,
-    private router:Router
+    private router:Router,
   ) {
     this.error='';
     this.userForm_inicio=new FormGroup({
@@ -66,5 +66,7 @@ export class IniciarSesionComponent implements OnInit {
   ngOnInit(): void {
     localStorage.clear();
   }
+
+  
 
 }

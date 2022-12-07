@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlumnoService } from 'src/app/services/alumno.service';
 
 @Component({
   selector: 'app-panel-alumnos',
@@ -7,9 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelAlumnosComponent implements OnInit {
 
-  constructor() { }
+  alumnos: any = [];
+  busquedaAlumnos: any[] = [];
+  tablaAlumnos: any = [];
+  paginacion: any[] = [];
+  paginaActual: number = 0;
+  ultimaPagina: number = 0;
+  buscarAlumno: string = "";
+
+  constructor(private alumnoService: AlumnoService) {}
 
   ngOnInit(): void {
+    this.obtenerAlumnos();
+  }
+
+  async obtenerAlumnos() {
+    let response: any = await this.alumnoService.getAll({});
+    this.alumnos = response.rows;
+    console.log(this.alumnos);
+    this.busquedaAlumnos = this.alumnos;
+    this.ultimaPagina = Math.ceil(this.alumnos.length / 10);
+    this.paginacion = Array(this.ultimaPagina);
+    this.cambiarPagina(this.paginaActual);
+  }
+
+  cambiarPagina(pagina: number) {
+    this.tablaAlumnos = this.busquedaAlumnos.slice(pagina * 10, (pagina + 1) * 10);
+    this.paginaActual = pagina;
+  }
+
+  buscarAlumnos() {
+    this.busquedaAlumnos = this.alumnos.filter(
+      (alumno: any) => {
+        return alumno.nombreCompleto.toUpperCase().includes(this.buscarAlumno.toUpperCase())
+          || alumno.usuario.toUpperCase().includes(this.buscarAlumno.toUpperCase())
+      }
+    );
+    this.ultimaPagina = Math.ceil(this.busquedaAlumnos.length / 10);
+    this.paginacion = Array(this.ultimaPagina);
+    this.cambiarPagina(0);
+  }
+
+  deleteUser(alumnoId: any){
+    this.alumnoService.deleteUser(alumnoId);
   }
 
 }

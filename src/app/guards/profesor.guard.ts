@@ -8,17 +8,16 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 export class ProfesorGuard implements CanActivate {
 
   constructor(
-    private router:Router,
+    private router: Router,
   ){}
 
   canActivate ():  boolean | UrlTree {
-    let token=localStorage.getItem('token-usuario');
-    let tipo_usuario=localStorage.getItem('rolId-usuario');
-    if(token!=null && tipo_usuario=="3"){
+    let token = localStorage.getItem('token');
+    let tipo_usuario = localStorage.getItem('rolId');
+    if(token != null && tipo_usuario == "3"){
       return true;
-    }
-    else{
-      this.router.navigate(['/TeacherApp']);
+    } else {
+      this.router.navigate(['/TeacherApp/buscador']);
       return false;
     }
   }

@@ -16,9 +16,15 @@
 
       <agm-marker [latitude]="profesor.latitud" [longitude]="profesor.longitud" iconUrl="assets/ubicacion_rojo.png">
         <agm-info-window>
-          <div><h6 class="mb-0">{{ profesor.nombreCompleto }}</h6></div>
+          <div>
+            <h6 class="mb-0">
+              {{ profesor.nombreCompleto }} 
+              <a *ngIf="token" [href]="'TeacherApp/info-profesor/'+profesor.id" class="btn btn-sm btn-primary">Ver más</a>
+            </h6>
+          </div>
           <div><strong>{{ profesor.nombreRama }}</strong></div>
           <div>{{ profesor.descripcion }}</div>
+          <div>Precio/Hora: {{ profesor.precioHora | formatoMedidas: '€' }}</div>
           <div>Experiencia: {{ profesor.experiencia }}</div>
           <div>Distancia: {{ profesor.distancia | formatoMedidas: 'Kms' }}</div>
         </agm-info-window>

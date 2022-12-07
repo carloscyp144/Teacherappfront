@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatoMedidasPipe implements PipeTransform {
 
   transform(value: number, medida: string): string {
-    return `${value.toFixed(2).toString().replace('.', ',')} ${medida}`;
+    let numero = Number(value);
+    return `${numero.toFixed(2).toString().replace('.', ',')} ${medida}`;
   }
 
 }

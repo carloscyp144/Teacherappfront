@@ -26,10 +26,12 @@ import { AlumnoOpinarComponent } from './components/alumno-opinar/alumno-opinar.
 import { BarraAlumnoComponent } from './components/barra-alumno/barra-alumno.component';
 import { CartaProfesorComponent } from './components/carta-profesor/carta-profesor.component';
 import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.component';
+import { InfoProfesorComponent } from './components/info-profesor/info-profesor.component';
 // Pipes
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
 import { environment } from 'src/environments/environment';
+import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { environment } from 'src/environments/environment';
     CartaProfesorComponent,
     PanelComponent,
     PanelProfesoresComponent,
-    PanelAlumnosComponent
+    PanelAlumnosComponent,
+    InfoProfesorComponent,
+    AdminPerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,9 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule, //Formularios
     FormsModule //NgModul
   ],
-  providers: [],
+  providers: [
+    FormatoMedidasPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

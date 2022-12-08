@@ -36,8 +36,8 @@ export class CrearProfesorComponent implements OnInit {
       nombreCompleto:new FormControl('',[Validators.required]),
       telefono:new FormControl('',[Validators.required]),
       descripcion:new FormControl('',[Validators.required]),
-      precioHora:new FormControl('',[Validators.required]),
-      experiencia:new FormControl('',[Validators.required]),
+      precioHora:new FormControl('',[Validators.required,Validators.min(0)]),
+      experiencia:new FormControl('',[Validators.required,Validators.min(0)]),
       imagen:new FormControl('',[Validators.required]),
       ramaId:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
@@ -71,29 +71,33 @@ export class CrearProfesorComponent implements OnInit {
   }
   //Funcion auxiliar para crear un profesor
   async crear_profesor(datos:any){
-    let datos2=Object.assign(datos,{longitud:+this.longitud,latitud:+this.latitud});
+    let datos2=Object.assign(datos,{longitud:this.longitud,latitud:this.latitud});
     await this.llamadasprofesor.crear_profe(datos2)
     .then((response: any)=>{
       this.logearse({email:datos2.email,password:datos2.password});
     })
-    .catch((err: any)=>{console.log(err);})
+    .catch((err: any)=>{
+      this.loginService.gestion_de_errores_crear_modificar_profesor(err);
+    });
   }
   //Funcion auxiliar para modificar datos
   async modificar_profesor(datos:any){
     let email=this.userForm_profesor.get('email')?.value;
     let userName=this.userForm_profesor.get('userName')?.value;
-    let datos2=Object.assign(datos,{email:email,userName:userName,longitud:+this.longitud,latitud:+this.latitud});
+    let datos2=Object.assign(datos,{email:email,userName:userName,longitud:this.longitud,latitud:this.latitud});
     await this.llamadasprofesor.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
-        console.log(response);
         Swal.fire('Correcto', 'Usuario modificado', 'success');
       })
-      .catch((err: any)=>{console.log(err);})
+      .catch((err: any)=>{
+        this.loginService.gestion_de_errores_crear_modificar_profesor(err);
+      });
   }
   //Funcion para dibujar los datos de un usuario al acceder a su perfil
   async datos():Promise<void> {
     await this.llamadasprofesor.datos(localStorage.getItem('token'))
     .then((response: any)=>{
+      console.log(response);
       this.userForm_profesor=new FormGroup({
         userName:new FormControl(response.profesor.userName,[Validators.required]),
         nombreCompleto:new FormControl(response.profesor.nombreCompleto,[Validators.required]),
@@ -101,18 +105,20 @@ export class CrearProfesorComponent implements OnInit {
         descripcion:new FormControl(response.profesor.descripcion,[Validators.required]),
         precioHora:new FormControl(response.profesor.precioHora,[Validators.required]),
         experiencia:new FormControl(response.profesor.experiencia,[Validators.required]),
-        imagen:new FormControl('',[Validators.required]),
+        imagen:new FormControl(response.profesor.image,[]),
         ramaId:new FormControl(response.profesor.ramaId,[Validators.required]),
         email:new FormControl(response.profesor.email,[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
         password:new FormControl('',[Validators.required]),
       });
-      this.latitud = +response.profesor.latitud;
-      this.longitud = +response.profesor.longitud;
+      this.latitud = response.profesor.latitud;
+      this.longitud = response.profesor.longitud;
       this.userForm_profesor.get('userName')?.disable();
       this.userForm_profesor.get('email')?.disable();
       this.userForm_profesor.get('password')?.disable();
     })
-    .catch((err: any)=>{})
+    .catch((err: any)=>{
+      this.llamadasprofesor.gestion_de_errores_datos_profesor(err);
+    })
   }
   //Funcion para obtener las ramas que existen
   async obtenerRamas() {
@@ -121,16 +127,15 @@ export class CrearProfesorComponent implements OnInit {
   }
   //Funcion para dibujar en el mapa una ubicacion
   placeMarker($event:any){
-    console.log($event);
-    this.latitud = +$event.coords.lat;
-    this.longitud = +$event.coords.lng;
+    this.latitud = $event.coords.lat;
+    this.longitud = $event.coords.lng;
   }
   //Funcion para obtener la ubicacion actual del usuario
   async obtenerUbicacion() {
     this.localizacionService.getPosition()
     .then((posicion) => {
-      this.latitud = +posicion.lat;
-      this.longitud = +posicion.lng;
+      this.latitud = posicion.lat;
+      this.longitud = posicion.lng;
     })
     .catch((err) => {
       Swal.fire('No te localizamos', 'Comprueba los permisos de acceso a ubicación o utiliza el buscador', 'error');
@@ -139,14 +144,13 @@ export class CrearProfesorComponent implements OnInit {
   //Funcion para logearse al crear la cuenta
   async logearse(inicio:any):Promise<void>{
     await this.loginService.login_user(inicio)
-    .then((response: any)=>{
-      console.log(response);
-      localStorage.setItem('token',response.token);
-      localStorage.setItem('rolId',"3");
-      localStorage.setItem('email',response.profesor.email);
-      localStorage.setItem('id',response.profesor.usuarioId);
-      this.router.navigate(['TeacherApp/profesor/perfil']);
-    })
-    .catch((err: any)=>{console.log(err)})
+      .then(response => {
+        this.loginService.gestion_de_login(response);
+      })
+      .catch(err=>{
+        this.loginService.gestion_de_errores_login(err);
+      });
   }
+
+  
 }

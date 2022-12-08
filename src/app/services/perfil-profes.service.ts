@@ -90,4 +90,23 @@ export class PerfilProfesService {
       Swal.fire('', 'Se ha producido algun tipo de error', 'error');
     }
   }
+  gestion_de_errores_aceptar_alumno(err:any):void{
+    if(err.status){
+      if(err.status==401){
+        Swal.fire('', 'La inscripción pertenece a otro profesor', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'No existe ninguna inscripción con el identificador especificado', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'Se ha producido algún error en el servidor', 'error');
+      }
+      else{
+        Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+      }
+    }
+    else{
+      Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+    }
+  }
 }

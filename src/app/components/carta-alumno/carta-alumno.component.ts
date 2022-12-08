@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PerfilProfesService } from 'src/app/services/perfil-profes.service';
 import { environment } from 'src/environments/environment';
@@ -23,7 +22,6 @@ export class CartaAlumnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.Alumno);
     if(this.Alumno.estado==0){
       this.aceptado=false;
     }
@@ -35,7 +33,9 @@ export class CartaAlumnoComponent implements OnInit {
     .then(response=>{
       window.location.reload();
     })
-    .catch(err=>{console.log(err);})
+    .catch(err=>{
+      this.llamadasprofesor.gestion_de_errores_aceptar_alumno(err);
+    })
   }
 
   url_imagen(id_imagen:string):string{

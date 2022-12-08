@@ -59,7 +59,7 @@ export class LoginService {
     }
   }
 
-  gestion_de_errores_crear_modificar_profesor(err:any):void{
+  gestion_de_errores_crear_modificar(err:any):void{
     if(err.status){
       if(err.status==400){
         Swal.fire('', 'Alguno de los campos enviados es incorrecto', 'error');

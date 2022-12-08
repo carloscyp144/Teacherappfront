@@ -77,7 +77,7 @@ export class CrearProfesorComponent implements OnInit {
       this.logearse({email:datos2.email,password:datos2.password});
     })
     .catch((err: any)=>{
-      this.loginService.gestion_de_errores_crear_modificar_profesor(err);
+      this.loginService.gestion_de_errores_crear_modificar(err);
     });
   }
   //Funcion auxiliar para modificar datos
@@ -90,14 +90,13 @@ export class CrearProfesorComponent implements OnInit {
         Swal.fire('Correcto', 'Usuario modificado', 'success');
       })
       .catch((err: any)=>{
-        this.loginService.gestion_de_errores_crear_modificar_profesor(err);
+        this.loginService.gestion_de_errores_crear_modificar(err);
       });
   }
   //Funcion para dibujar los datos de un usuario al acceder a su perfil
   async datos():Promise<void> {
     await this.llamadasprofesor.datos(localStorage.getItem('token'))
     .then((response: any)=>{
-      console.log(response);
       this.userForm_profesor=new FormGroup({
         userName:new FormControl(response.profesor.userName,[Validators.required]),
         nombreCompleto:new FormControl(response.profesor.nombreCompleto,[Validators.required]),
@@ -151,6 +150,4 @@ export class CrearProfesorComponent implements OnInit {
         this.loginService.gestion_de_errores_login(err);
       });
   }
-
-  
 }

@@ -46,7 +46,6 @@ export class CrearAlumnoComponent implements OnInit {
   }
   //Funcion para crear un alumno o modificar sus datos
   async getDataForm():Promise<void>{
-    console.log(this.userForm_alumno.value);
     if(this.router.url=='/TeacherApp/crear_cuenta'){
       this.crear_alumno(this.userForm_alumno.value);
     }
@@ -61,7 +60,9 @@ export class CrearAlumnoComponent implements OnInit {
     .then((response:any)=>{
       this.logearse({email:datos.email,password:datos.password});
     })
-    .catch((err: any)=>{console.log(err);})
+    .catch((err: any)=>{
+      this.loginService.gestion_de_errores_crear_modificar(err);
+    })
   }
   //Funcion auxiliar para modificar datos
   async modificar_alumno(datos:any){
@@ -70,10 +71,11 @@ export class CrearAlumnoComponent implements OnInit {
     let datos2=Object.assign(datos,{email:email,userName:userName});
     await this.llamadasalumnos.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
-        console.log(response);
         Swal.fire('Correcto', 'Usuario modificado', 'success');
       })
-      .catch((err: any)=>{console.log(err);})
+      .catch((err: any)=>{
+        this.loginService.gestion_de_errores_crear_modificar(err);
+      })
   }
   //Funcion para dibujar los datos de un usuario al acceder a su perfil
   async datos():Promise<void> {
@@ -89,20 +91,18 @@ export class CrearAlumnoComponent implements OnInit {
       this.userForm_alumno.get('userName')?.disable();
       this.userForm_alumno.get('email')?.disable();
     })
-    .catch((err: any)=>{})
+    .catch((err: any)=>{
+      this.llamadasalumnos.gestion_de_errores_datos_alumnos(err);
+    })
   }
   //Funcion para logearse al crear la cuenta
   async logearse(inicio:any):Promise<void>{
     await this.loginService.login_user(inicio)
-    .then(response=>{
-      console.log(response);
-      localStorage.setItem('token',response.token);
-      localStorage.setItem('rolId',"2");
-      localStorage.setItem('email',response.alumno.email);
-      localStorage.setItem('id',response.alumno.usuarioId);
-      this.router.navigate(['TeacherApp/alumno/perfil']);
-    })
-    .catch(err=>{console.log(err)})
+      .then((response: any) => {
+        this.loginService.gestion_de_login(response);
+      })
+      .catch((err: any)=>{
+        this.loginService.gestion_de_errores_login(err);
+      });
   }
 }
-

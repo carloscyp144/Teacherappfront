@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import Swal from'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +71,21 @@ export class PerfilAlumnosService {
       })
     }
     return lastValueFrom(this.httpClient.put(this.baseURL4,datos,httpOptions));
+  }
+  gestion_de_errores_datos_alumnos(err:any):void{
+    if(err.status){
+      if(err.status==404){
+        Swal.fire('', 'No se pudo recuperar el usuario', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'Se ha producido algún error en el servidor', 'error');
+      }
+      else{
+        Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+      }
+    }
+    else{
+      Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+    }
   }
 }

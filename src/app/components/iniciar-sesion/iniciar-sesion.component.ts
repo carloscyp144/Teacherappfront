@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -12,56 +11,62 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 export class IniciarSesionComponent implements OnInit {
 
-  userForm_inicio: FormGroup;
-  error: String = '';
-
+  userForm_inicio:FormGroup;
+  error: String;
   constructor(
     private loginService:LoginService,
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private router:Router,
   ) {
-    this.userForm_inicio = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      contra: new FormControl('', [Validators.required]),
+    this.error='';
+    this.userForm_inicio=new FormGroup({
+      email:new FormControl('',[Validators.required]),
+      contra:new FormControl('',[Validators.required]),
     });
+    
   }
 
-  ngOnInit(): void {
-
-  }
-
-  async logearse(): Promise<void> {
-    let User = this.userForm_inicio.value;
-    let inicio = {
+  async logearse():Promise<void>{
+    let User=this.userForm_inicio.value;
+    let inicio={
       email: User.email,
       password: User.contra
     }
     await this.loginService.login_user(inicio)
-      .then(response => {
-        let rolId, email;
-        if (response.admin) {
-          rolId = response.admin.rolId;
-          email = response.admin.email;
-        } else if (response.alumno) {
-          rolId = response.alumno.rolId;
-          email = response.alumno.email;
-        } else if(response.profesor){
-          rolId = response.profesor.rolId;
-          email = response.profesor.email;
-        }
-        this.localStorageService.saveData(response.token, rolId, email);
-        window.location.href = '/TeacherApp/buscador';
-      })
-      .catch(err => {
-        if (err.error.errorMessage) {
-          this.error = err.error.errorMessage;
-        } else if (err.error.password.msg) {
-          this.error = err.error.password.msg;
-        } else {
-          this.error = err;
-        }
-        console.log(this.error);
-      });
+    .then(response=>{
+      localStorage.setItem('token-usuario',response.token);
+      if(response.admin){
+        localStorage.setItem('rolId-usuario',"1");
+        localStorage.setItem('email-usuario',response.admin.email);
+        localStorage.setItem('id-usuario',response.admin.usuarioId);
+        this.router.navigate(['TeacherApp/administrador/validar']);
+      }
+      else if(response.alumno){
+        localStorage.setItem('rolId-usuario',"2");
+        localStorage.setItem('email-usuario',response.alumno.email);
+        localStorage.setItem('id-usuario',response.alumno.usuarioId);
+        this.router.navigate(['TeacherApp/alumno/perfil']);
+      }
+      else if(response.profesor){
+        localStorage.setItem('rolId-usuario',"3");
+        localStorage.setItem('email-usuario',response.profesor.email);
+        localStorage.setItem('id-usuario',response.profesor.usuarioId);
+        this.router.navigate(['TeacherApp/profesor/perfil']);
+      }
+    })
+    .catch(err=>{
+      if(err.error.errorMessage){
+        this.error=err.error.errorMessage;
+      }
+      else if(err.error.password.msg){
+        this.error=err.error.password.msg;
+      }
+    })
   }
+
+  ngOnInit(): void {
+    localStorage.clear();
+  }
+
+  
 
 }

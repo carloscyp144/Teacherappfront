@@ -13,8 +13,8 @@
         </div>
 
         <div class="boton">
-            <button type="submit" class="btn btn-primary mt-3" [disabled]="!userForm_inicio.valid">Iniciar sesion</button>
-            <button class="btn btn-danger mt-3"><a class="crear_cuenta" href="#">Crear cuenta</a></button>
+            <button type="submit" class="btn btn-primary mt-3 ms-3 me-3 mb-3" [disabled]="!userForm_inicio.valid">Iniciar sesion</button>
+            <button class="btn btn-danger mt-3 ms-3 me-3 mb-3" routerLinkActive="active" [routerLink]="['/TeacherApp/recuperar_password']">Recuperar contraseña</button>
         </div>
 
     </form>

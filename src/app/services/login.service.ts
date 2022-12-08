@@ -11,6 +11,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class LoginService {
   
   baseURL:string=environment.API_URL+"/api/public/login";
+  baseURL1:string=environment.API_URL+"/api/public/usuarios/newpassword";
   constructor(
     private httpClient:HttpClient,
     private localStorageService: LocalStorageService,
@@ -18,6 +19,10 @@ export class LoginService {
 
   login_user(inicio_sesion:any):Promise<any>{
     return lastValueFrom(this.httpClient.post<any>(this.baseURL,inicio_sesion));
+  }
+
+  recuperar_contra(correo:string):Promise<any>{
+    return lastValueFrom(this.httpClient.post<any>(this.baseURL1,correo));
   }
   
   gestion_de_login(response:any):void{

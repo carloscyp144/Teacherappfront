@@ -32,6 +32,7 @@ import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.com
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
 import { environment } from 'src/environments/environment';
+import { RecuperarComponent } from './components/recuperar/recuperar.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { environment } from 'src/environments/environment';
     PanelAlumnosComponent,
     InfoProfesorComponent,
     AdminPerfilComponent,
+    RecuperarComponent,
   ],
   imports: [
     BrowserModule,

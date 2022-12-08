@@ -16,6 +16,7 @@ import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.com
 import { AlumnoGuard } from './guards/alumno.guard';
 import { ProfesorGuard } from './guards/profesor.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { RecuperarComponent } from './components/recuperar/recuperar.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: "TeacherApp/admin/perfil", component: AdminPerfilComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate: [AdminGuard] },
+  { path: "TeacherApp/recuperar_password", component: RecuperarComponent },
   { path: "**", redirectTo: "home" }
 ];
 

@@ -88,4 +88,23 @@ export class PerfilAlumnosService {
       Swal.fire('', 'Se ha producido algun tipo de error', 'error');
     }
   }
+  gestion_de_errores_opiniones(err:any):void{
+    if(err.status){
+      if(err.status==401){
+        Swal.fire('', 'La inscripción pertenece a otro alumno', 'error');
+      }
+      else if(err.status==404){
+        Swal.fire('', 'La inscripción pertenece a otro alumno', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'Se ha producido algún error en el servidor', 'error');
+      }
+      else{
+        Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+      }
+    }
+    else{
+      Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+    }
+  }
 }

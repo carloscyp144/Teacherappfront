@@ -3,8 +3,14 @@
     color:white;
 }
 .container-form{
-    width: 40%;
+    width: 85%;
     margin: 0 auto;
+}
+@media (min-width: 768px) {
+    .container-form{
+        width: 40%;
+        margin: 0 auto;
+    }
 }
 .boton{
     display: flex;

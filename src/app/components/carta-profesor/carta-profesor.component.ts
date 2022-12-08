@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PerfilAlumnosService } from 'src/app/services/perfil-alumnos.service';
 import { environment } from 'src/environments/environment';
+import Swal from'sweetalert2';
 
 @Component({
   selector: 'app-carta-profesor',
@@ -13,8 +14,8 @@ export class CartaProfesorComponent implements OnInit {
   userForm_opinion:FormGroup;
   @Input() Profesor!:any;
   imagen:string="";
-  aceptado=true;
-  comentar="Enviar datos";
+  aceptado:boolean=false;
+  comentar:string="Enviar datos";
 
   constructor(
     private llamadasalumnos:PerfilAlumnosService,
@@ -29,11 +30,9 @@ export class CartaProfesorComponent implements OnInit {
     
     this.userForm_opinion.setValue({comentario:this.Profesor.comentario,puntuacion:this.Profesor.puntuacion});
     this.imagen=this.url_imagen(this.Profesor.imagen);
-    console.log(this.Profesor);
     if (this.Profesor.estado==0){
       this.userForm_opinion.get('comentario')?.disable();
       this.userForm_opinion.get('puntuacion')?.disable();
-      this.aceptado=false;
       this.comentar="No has sido aceptado";
     }
   }
@@ -46,12 +45,33 @@ export class CartaProfesorComponent implements OnInit {
   }
   async getDataForm():Promise<void>{
     let datos2=Object.assign(this.userForm_opinion.value,{id:this.Profesor.id});
-    console.log(datos2);
     await this.llamadasalumnos.opinar(datos2,localStorage.getItem('token'))
     .then((response: any)=>{
-      console.log(response);
+      Swal.fire('Correcto', 'Opinion enviada', 'success');
     })
-    .catch((err: any)=>{console.log(err);})
-    
+    .catch((err: any)=>{
+      this.llamadasalumnos.gestion_de_errores_opiniones(err);
+    })
+  }
+  opinion_valida():void{
+    let comentario=this.userForm_opinion.get('comentario')?.value;
+    let puntuacion=this.userForm_opinion.get('puntuacion')?.value;
+    let comentario_vacio:boolean=(comentario==null) || (comentario==undefined) || (comentario=="");
+    let puntuacion_vacia:boolean= (puntuacion==null) || (puntuacion==undefined);
+    if(comentario_vacio==true && puntuacion_vacia==true){
+      this.aceptado=false;
+    }
+    else if(comentario_vacio==true && (puntuacion<0 || puntuacion >10 || Number.isInteger(puntuacion)==false)){
+      this.aceptado=false;
+    }
+    else if(comentario_vacio==false && puntuacion_vacia==true){
+      this.aceptado=true;
+    }
+    else if(puntuacion<0 || puntuacion >10 || Number.isInteger(puntuacion)==false){
+      this.aceptado=false;
+    }
+    else{
+      this.aceptado=true;
+    }
   }
 }

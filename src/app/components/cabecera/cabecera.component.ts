@@ -29,7 +29,7 @@ export class CabeceraComponent implements OnInit {
       { type: 'link', name: 'Mensajes', link: ''}
     ]  },
     { type: 'profesor', options: [
-      { type: 'link', name: 'Perfil', link: 'TeacherApp/profesor/alumnos'},
+      { type: 'link', name: 'Perfil', link: 'TeacherApp/profesor/perfil'},
       { type: 'link', name: 'Alumnos', link: 'TeacherApp/profesor/alumnos'},
       { type: 'link', name: 'Mensajes', link: ''}
     ] }

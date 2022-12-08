@@ -20,6 +20,7 @@ import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "TeacherApp/buscador" },
+  {path:"home",component:BuscadorComponent},
   { path: "TeacherApp/buscador", component: BuscadorComponent },
   { path: "TeacherApp/iniciar_sesion", component: IniciarSesionComponent },
   { path: "TeacherApp/crear_cuenta", component: CrearCuentaComponent },

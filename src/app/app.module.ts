@@ -32,7 +32,6 @@ import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.com
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
 import { environment } from 'src/environments/environment';
-import { CerrarSesionComponent } from './components/cerrar-sesion/cerrar-sesion.component';
 
 
 @NgModule({
@@ -60,7 +59,6 @@ import { CerrarSesionComponent } from './components/cerrar-sesion/cerrar-sesion.
     PanelAlumnosComponent,
     InfoProfesorComponent,
     AdminPerfilComponent,
-    CerrarSesionComponent
   ],
   imports: [
     BrowserModule,

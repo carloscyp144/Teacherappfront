@@ -71,7 +71,7 @@ export class CrearProfesorComponent implements OnInit {
   }
   //Funcion auxiliar para crear un profesor
   async crear_profesor(datos:any){
-    let datos2=Object.assign(datos,{longitud:this.longitud,latitud:this.latitud});
+    let datos2=Object.assign(datos,{longitud:+this.longitud,latitud:+this.latitud});
     await this.llamadasprofesor.crear_profe(datos2)
     .then((response: any)=>{
       this.logearse({email:datos2.email,password:datos2.password});
@@ -82,7 +82,7 @@ export class CrearProfesorComponent implements OnInit {
   async modificar_profesor(datos:any){
     let email=this.userForm_profesor.get('email')?.value;
     let userName=this.userForm_profesor.get('userName')?.value;
-    let datos2=Object.assign(datos,{email:email,userName:userName,longitud:this.longitud,latitud:this.latitud});
+    let datos2=Object.assign(datos,{email:email,userName:userName,longitud:+this.longitud,latitud:+this.latitud});
     await this.llamadasprofesor.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
         console.log(response);
@@ -106,8 +106,8 @@ export class CrearProfesorComponent implements OnInit {
         email:new FormControl(response.profesor.email,[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
         password:new FormControl('',[Validators.required]),
       });
-      this.latitud = response.profesor.latitud;
-      this.longitud = response.profesor.longitud;
+      this.latitud = +response.profesor.latitud;
+      this.longitud = +response.profesor.longitud;
       this.userForm_profesor.get('userName')?.disable();
       this.userForm_profesor.get('email')?.disable();
       this.userForm_profesor.get('password')?.disable();
@@ -122,15 +122,15 @@ export class CrearProfesorComponent implements OnInit {
   //Funcion para dibujar en el mapa una ubicacion
   placeMarker($event:any){
     console.log($event);
-    this.latitud = $event.coords.lat;
-    this.longitud = $event.coords.lng;
+    this.latitud = +$event.coords.lat;
+    this.longitud = +$event.coords.lng;
   }
   //Funcion para obtener la ubicacion actual del usuario
   async obtenerUbicacion() {
     this.localizacionService.getPosition()
     .then((posicion) => {
-      this.latitud = posicion.lat;
-      this.longitud = posicion.lng;
+      this.latitud = +posicion.lat;
+      this.longitud = +posicion.lng;
     })
     .catch((err) => {
       Swal.fire('No te localizamos', 'Comprueba los permisos de acceso a ubicación o utiliza el buscador', 'error');

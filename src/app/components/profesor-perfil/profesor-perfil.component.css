@@ -1,12 +1,4 @@
-.crear_cuenta{
-    text-decoration: none;
-    color:white;
-}
 .container-form{
     width: 40%;
     margin: 0 auto;
-}
-.boton{
-    display: flex;
-    justify-content: center;
 }

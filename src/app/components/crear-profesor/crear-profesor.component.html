@@ -55,9 +55,8 @@
         </div>
     </div>
 
-    <agm-map [latitude]=latitud [longitude]=longitud [streetViewControl]="false" [mapTypeControl]="true" [fullscreenControl]="true" (mapClick)="placeMarker($event)">
-        <agm-marker [latitude]=latitud [longitude]=longitud></agm-marker>
-        <agm-circle  [radius]="20" [fillOpacity]="0.50"></agm-circle>
+    <agm-map [latitude]="latitud" [longitude]="longitud" [streetViewControl]="false"  [mapTypeControl]="true" [fullscreenControl]="true" (mapClick)="placeMarker($event)">
+        <agm-marker [latitude]="latitud" [longitude]="longitud" iconUrl="assets/ubicacion_rojo.png"></agm-marker>
     </agm-map>
 
     <div class="boton">

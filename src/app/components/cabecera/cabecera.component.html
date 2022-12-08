@@ -27,9 +27,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {{ email }}
                     </a>
-
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
                         <li *ngFor="let option of menu">
                             <a class="dropdown-item close-collapse" [routerLink]="[option.link]">
                                 {{ option.name }}
@@ -41,9 +39,8 @@
                                 Cerrar sesión
                             </a>
                         </li>
-
                     </ul>
-                  </li>
+                </li>
             </ul>
         </div>
     </div>

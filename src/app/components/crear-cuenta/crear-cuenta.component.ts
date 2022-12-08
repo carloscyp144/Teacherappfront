@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class CrearCuentaComponent implements OnInit {
 
   opcion_alumno_profe:string;
-  constructor() {
+  constructor(
+  ) {
     this.opcion_alumno_profe='¿Eres profesor o alumno?';
     
   }
@@ -18,5 +19,5 @@ export class CrearCuentaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
 }

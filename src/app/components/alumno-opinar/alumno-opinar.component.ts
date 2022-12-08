@@ -15,7 +15,7 @@ export class AlumnoOpinarComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    await this.llamadas_alumnos.profesores(localStorage.getItem('token-usuario'))
+    await this.llamadas_alumnos.profesores(localStorage.getItem('token'))
     .then(response=>{
       this.arrprofes=response.rows;
     })

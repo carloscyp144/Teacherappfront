@@ -1,6 +1,10 @@
-<div class="container mt-3">
+<div class="container mt-3 pb-5">
 
   <form [formGroup]="formAdmin" (ngSubmit)="onSubmit(formAdmin.value)" class="row g-3">
+
+    <div class="">
+      <img [src]="getUserImage()" alt="" class="rounded-circle image-profile">
+    </div>
 
     <div class="">
       <label for="emailAdmin" class="form-label">Email</label>
@@ -19,7 +23,7 @@
 
     <div class="">
       <label for="avatarAdmin" class="form-label">Avatar</label>
-      <input class="form-control" [ngClass]="{'is-invalid': errorAvatar}" (input)="fileChoosen($event)" formControlName="avatar" type="file" id="avatarAdmin" aria-describedby="validationAvatar">
+      <input class="form-control" [ngClass]="{'is-invalid': errorAvatar}" (input)="fileChoosen($event)"  type="file" id="avatarAdmin" aria-describedby="validationAvatar">
       <div id="validationAvatar" class="invalid-feedback">
         Solo archivos de tipo imágen (.jpg, .jpeg y .png).
       </div>

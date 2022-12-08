@@ -37,7 +37,7 @@ export class UsuarioService {
   }
 
   changeImageUser(imagen: any) {
-    let headers = this.configHeaders();
+    let headers = new HttpHeaders();
     let localStorage: any = this.localStorageService.getData();
     headers = headers.set('Authorization', localStorage.token);
     return lastValueFrom(this.http.put<any>(`${this.base_url}/api/private/usuarios/update/imagen`, imagen, { headers }));

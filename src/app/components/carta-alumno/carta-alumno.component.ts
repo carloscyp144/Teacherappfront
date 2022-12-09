@@ -32,7 +32,7 @@ export class CartaAlumnoComponent implements OnInit {
   async aceptar_alumno():Promise<void>{
     await this.llamadasprofesor.aceptar_alumnos(this.Alumno.id,localStorage.getItem('token'))
     .then(response=>{
-      Swal.fire('Correcto', 'Se ha enviado un correo con las instrucciones para recuperar tu contraseña', 'success');
+      Swal.fire('Correcto', 'Has aceptado a este alumno', 'success');
       window.location.reload();
     })
     .catch(err=>{

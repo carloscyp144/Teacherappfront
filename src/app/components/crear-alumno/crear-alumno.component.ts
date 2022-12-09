@@ -35,7 +35,7 @@ export class CrearAlumnoComponent implements OnInit {
       nombreCompleto:new FormControl('',[Validators.required]),
       imagen:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
-      password:new FormControl('',[Validators.required]),
+      password:new FormControl('',[Validators.required,Validators.minLength(6)]),
     });
 
   }
@@ -92,12 +92,13 @@ export class CrearAlumnoComponent implements OnInit {
       this.userForm_alumno=new FormGroup({
         userName:new FormControl(response.alumno.userName,[Validators.required]),
         nombreCompleto:new FormControl(response.alumno.nombreCompleto,[Validators.required]),
-        imagen:new FormControl('',[Validators.required]),
+        imagen:new FormControl('',[]),
         email:new FormControl(response.alumno.email,[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
-        password:new FormControl('',[Validators.required]),
+        password:new FormControl('',[]),
       });
       this.userForm_alumno.get('userName')?.disable();
       this.userForm_alumno.get('email')?.disable();
+      this.imagen=this.url_imagen(response.alumno.imagen);
     })
     .catch((err: any)=>{
       this.llamadasalumnos.gestion_de_errores_datos_alumnos(err);

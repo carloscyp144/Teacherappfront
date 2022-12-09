@@ -67,7 +67,15 @@ export class LoginService {
   gestion_de_errores_crear_modificar(err:any):void{
     if(err.status){
       if(err.status==400){
-        Swal.fire('', 'Alguno de los campos enviados es incorrecto', 'error');
+        if(err.error.userName){
+          Swal.fire('', err.error.userName.msg, 'error');
+        }
+        else if(err.error.email){
+          Swal.fire('', err.error.email.msg, 'error');
+        }
+        else{
+          Swal.fire('', 'Alguno de los campos enviados es incorrecto', 'error');
+        }
       }
       else if(err.status==500){
         Swal.fire('', 'Se ha producido algún error en el servidor', 'error');

@@ -47,7 +47,7 @@ export class CrearProfesorComponent implements OnInit {
       imagen:new FormControl('',[Validators.required]),
       ramaId:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
-      password:new FormControl('',[Validators.required]),
+      password:new FormControl('',[Validators.required,Validators.minLength(6)]),
     });
     
   }

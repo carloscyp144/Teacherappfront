@@ -7,6 +7,7 @@ import { Rama } from 'src/app/interfaces/rama.interface';
 import { LocalizacionService } from 'src/app/services/localizacion.service';
 import Swal from'sweetalert2';
 import { LoginService } from 'src/app/services/login.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-crear-profesor',
@@ -21,13 +22,15 @@ export class CrearProfesorComponent implements OnInit {
   ramas: Rama[] = [];
   latitud:number=40.34;
   longitud:number=-3.38;
+  image: any;
 
   constructor(
     private router:Router,
     private llamadasprofesor:PerfilProfesService,
     private ramaService:RamaService,
     private localizacionService: LocalizacionService,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private usuarioService:UsuarioService
   ) {
     this.crear_modificar='Crear cuenta';
     this.es_modificar=false;
@@ -87,6 +90,7 @@ export class CrearProfesorComponent implements OnInit {
     let datos2=Object.assign(datos,{email:email,userName:userName,longitud:this.longitud,latitud:this.latitud});
     await this.llamadasprofesor.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
+        this.guardaImagen();
         Swal.fire('Correcto', 'Usuario modificado', 'success');
       })
       .catch((err: any)=>{
@@ -144,10 +148,32 @@ export class CrearProfesorComponent implements OnInit {
   async logearse(inicio:any):Promise<void>{
     await this.loginService.login_user(inicio)
       .then(response => {
+        localStorage.setItem('token', response.token);
+        this.guardaImagen();
         this.loginService.gestion_de_login(response);
       })
       .catch(err=>{
         this.loginService.gestion_de_errores_login(err);
       });
+  }
+
+  fileChoosen(event: any) {
+    if(event.target.value) {
+      this.image = <File>event.target.files[0];
+    }
+  }
+
+  async guardaImagen() {
+    if(this.image) {
+      try {
+        let fd = new FormData();
+        if(this.image) {
+          fd.append('imagen', this.image, this.image.name);
+          await this.usuarioService.changeImageUser(fd);
+        }
+      } catch(err) {
+        Swal.fire('Error imagen', 'Se produjo un error al guardar tu imagen', 'error');
+      };
+    }
   }
 }

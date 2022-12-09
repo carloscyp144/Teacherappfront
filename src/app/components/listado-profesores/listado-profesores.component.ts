@@ -22,7 +22,6 @@ export class ListadoProfesoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocalStorage();
-    console.log(this.token);
   }
 
   getLocalStorage(): void {

@@ -30,7 +30,6 @@ export class RecuperarComponent implements OnInit {
         Swal.fire('Correcto', 'Usuario aceptado', 'success');
       })
       .catch(err=>{
-        console.log(err);
       });
   }
 

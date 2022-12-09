@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PerfilAlumnosService } from 'src/app/services/perfil-alumnos.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-crear-alumno',
@@ -15,12 +16,14 @@ export class CrearAlumnoComponent implements OnInit {
   userForm_alumno:FormGroup;
   crear_modificar:String;
   es_modificar:boolean;
+  image: any;
 
   constructor(
     private activatedRoute:ActivatedRoute,
     private router:Router,
     private llamadasalumnos:PerfilAlumnosService,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private usuarioService:UsuarioService
   ) {
     this.crear_modificar='Crear cuenta';
     this.es_modificar=false;
@@ -71,6 +74,7 @@ export class CrearAlumnoComponent implements OnInit {
     let datos2=Object.assign(datos,{email:email,userName:userName});
     await this.llamadasalumnos.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
+        this.guardaImagen();
         Swal.fire('Correcto', 'Usuario modificado', 'success');
       })
       .catch((err: any)=>{
@@ -99,10 +103,32 @@ export class CrearAlumnoComponent implements OnInit {
   async logearse(inicio:any):Promise<void>{
     await this.loginService.login_user(inicio)
       .then((response: any) => {
+        localStorage.setItem('token', response.token);
+        this.guardaImagen();
         this.loginService.gestion_de_login(response);
       })
       .catch((err: any)=>{
         this.loginService.gestion_de_errores_login(err);
       });
+  }
+
+  fileChoosen(event: any) {
+    if(event.target.value) {
+      this.image = <File>event.target.files[0];
+    }
+  }
+
+  async guardaImagen() {
+    if(this.image) {
+      try {
+        let fd = new FormData();
+        if(this.image) {
+          fd.append('imagen', this.image, this.image.name);
+          await this.usuarioService.changeImageUser(fd);
+        }
+      } catch(err) {
+        Swal.fire('Error imagen', 'Se produjo un error al guardar tu imagen', 'error');
+      };
+    }
   }
 }

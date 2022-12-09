@@ -25,7 +25,6 @@ export class PanelAlumnosComponent implements OnInit {
   async obtenerAlumnos() {
     let response: any = await this.alumnoService.getAll({});
     this.alumnos = response.rows;
-    console.log(this.alumnos);
     this.busquedaAlumnos = this.alumnos;
     this.ultimaPagina = Math.ceil(this.alumnos.length / 10);
     this.paginacion = Array(this.ultimaPagina);

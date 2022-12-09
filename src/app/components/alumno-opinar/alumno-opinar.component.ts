@@ -19,7 +19,7 @@ export class AlumnoOpinarComponent implements OnInit {
     .then(response=>{
       this.arrprofes=response.rows;
     })
-    .catch(err=>{console.log(err);})
+    .catch(err=>{})
   }
 
 }

@@ -19,7 +19,7 @@ export class ProfesorAlumnosComponent implements OnInit {
     .then(response=>{
       this.arralumnos=response.rows;
     })
-    .catch(err=>{console.log(err);})
+    .catch(err=>{})
   }
 
 }

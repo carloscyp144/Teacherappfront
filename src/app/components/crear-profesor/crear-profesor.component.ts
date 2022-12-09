@@ -8,6 +8,7 @@ import { LocalizacionService } from 'src/app/services/localizacion.service';
 import Swal from'sweetalert2';
 import { LoginService } from 'src/app/services/login.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-crear-profesor',
@@ -17,12 +18,14 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class CrearProfesorComponent implements OnInit {
 
   userForm_profesor:FormGroup;
-  crear_modificar:String;
+  crear_modificar:string;
   es_modificar:boolean;
   ramas: Rama[] = [];
   latitud:number=40.34;
   longitud:number=-3.38;
   image: any;
+  contra: string="";
+  imagen:string="";
 
   constructor(
     private router:Router,
@@ -92,6 +95,7 @@ export class CrearProfesorComponent implements OnInit {
       .then((response: any)=>{
         this.guardaImagen();
         Swal.fire('Correcto', 'Usuario modificado', 'success');
+        window.location.reload();
       })
       .catch((err: any)=>{
         this.loginService.gestion_de_errores_crear_modificar(err);
@@ -108,7 +112,7 @@ export class CrearProfesorComponent implements OnInit {
         descripcion:new FormControl(response.profesor.descripcion,[Validators.required]),
         precioHora:new FormControl(response.profesor.precioHora,[Validators.required]),
         experiencia:new FormControl(response.profesor.experiencia,[Validators.required]),
-        imagen:new FormControl(response.profesor.image,[]),
+        imagen:new FormControl('',[]),
         ramaId:new FormControl(response.profesor.ramaId,[Validators.required]),
         email:new FormControl(response.profesor.email,[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
         password:new FormControl('',[Validators.required]),
@@ -118,10 +122,11 @@ export class CrearProfesorComponent implements OnInit {
       this.userForm_profesor.get('userName')?.disable();
       this.userForm_profesor.get('email')?.disable();
       this.userForm_profesor.get('password')?.disable();
+      this.imagen=this.url_imagen(response.profesor.imagen);
     })
     .catch((err: any)=>{
       this.llamadasprofesor.gestion_de_errores_datos_profesor(err);
-    })
+    });
   }
   //Funcion para obtener las ramas que existen
   async obtenerRamas() {
@@ -172,8 +177,30 @@ export class CrearProfesorComponent implements OnInit {
           await this.usuarioService.changeImageUser(fd);
         }
       } catch(err) {
-        Swal.fire('Error imagen', 'Se produjo un error al guardar tu imagen', 'error');
+        this.usuarioService.gestion_de_errores_cambiar_imagen(err);
       };
+    }
+  }
+
+  url_imagen(id_imagen:string):string{
+    if(id_imagen==null){
+      return "./assets/images/blanco.png";
+    }
+    return environment.API_URL+"/images/avatars/"+id_imagen;
+  }
+  async modificar_contra():Promise<void>{
+    if(this.contra.length<6){
+      Swal.fire('No valido', 'La contraseña debe tener al menos 6 caracteres', 'error');
+    }
+    else{
+      await this.usuarioService.changePasswordUser(this.contra)
+      .then(reponse=>{
+        Swal.fire('Correcto', 'Contraseña modificada', 'success');
+        window.location.reload();
+      })
+      .catch(err=>{
+        this.usuarioService.gestion_de_errores_cambiar_contra(err);
+      });
     }
   }
 }

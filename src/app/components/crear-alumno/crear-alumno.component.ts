@@ -5,6 +5,7 @@ import { PerfilAlumnosService } from 'src/app/services/perfil-alumnos.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from'sweetalert2';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-crear-alumno',
@@ -17,6 +18,8 @@ export class CrearAlumnoComponent implements OnInit {
   crear_modificar:String;
   es_modificar:boolean;
   image: any;
+  contra: string="";
+  imagen:string="";
 
   constructor(
     private activatedRoute:ActivatedRoute,
@@ -76,6 +79,7 @@ export class CrearAlumnoComponent implements OnInit {
       .then((response: any)=>{
         this.guardaImagen();
         Swal.fire('Correcto', 'Usuario modificado', 'success');
+        window.location.reload();
       })
       .catch((err: any)=>{
         this.loginService.gestion_de_errores_crear_modificar(err);
@@ -129,6 +133,27 @@ export class CrearAlumnoComponent implements OnInit {
       } catch(err) {
         Swal.fire('Error imagen', 'Se produjo un error al guardar tu imagen', 'error');
       };
+    }
+  }
+  url_imagen(id_imagen:string):string{
+    if(id_imagen==null){
+      return "./assets/images/blanco.png";
+    }
+    return environment.API_URL+"/images/avatars/"+id_imagen;
+  }
+  async modificar_contra():Promise<void>{
+    if(this.contra.length<6){
+      Swal.fire('No valido', 'La contraseña debe tener al menos 6 caracteres', 'error');
+    }
+    else{
+      await this.usuarioService.changePasswordUser(this.contra)
+      .then(reponse=>{
+        Swal.fire('Correcto', 'Contraseña modificada', 'success');
+        window.location.reload();
+      })
+      .catch(err=>{
+        this.usuarioService.gestion_de_errores_cambiar_contra(err);
+      });
     }
   }
 }

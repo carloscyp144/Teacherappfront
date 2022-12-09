@@ -161,13 +161,13 @@ export class CrearProfesorComponent implements OnInit {
         this.loginService.gestion_de_errores_login(err);
       });
   }
-
+  //Funcion auxiliar para guardar la imagen de un usuario
   fileChoosen(event: any) {
     if(event.target.value) {
       this.image = <File>event.target.files[0];
     }
   }
-
+  //Funcion para guardar la imagen de un usuario
   async guardaImagen() {
     if(this.image) {
       try {
@@ -181,13 +181,14 @@ export class CrearProfesorComponent implements OnInit {
       };
     }
   }
-
+  //Esta funcion obtiene la url de la imagen de un usuario
   url_imagen(id_imagen:string):string{
     if(id_imagen==null){
       return "./assets/images/blanco.png";
     }
     return environment.API_URL+"/images/avatars/"+id_imagen;
   }
+  //Esta funcion permite modificar la contraseña de un usuario
   async modificar_contra():Promise<void>{
     if(this.contra.length<6){
       Swal.fire('No valido', 'La contraseña debe tener al menos 6 caracteres', 'error');
@@ -203,4 +204,5 @@ export class CrearProfesorComponent implements OnInit {
       });
     }
   }
+  
 }

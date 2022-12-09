@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -16,8 +15,7 @@ export class ListadoProfesoresComponent implements OnInit {
   email: string | null = null;
 
   constructor(
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {

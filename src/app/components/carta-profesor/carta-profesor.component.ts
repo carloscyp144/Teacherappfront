@@ -18,7 +18,7 @@ export class CartaProfesorComponent implements OnInit {
   comentar:string="Enviar datos";
 
   constructor(
-    private llamadasalumnos:PerfilAlumnosService,
+    private llamadasalumnos:PerfilAlumnosService
   ) {
     this.userForm_opinion=new FormGroup({
       comentario:new FormControl('this.Profesor.comentario',[Validators.required]),
@@ -27,7 +27,6 @@ export class CartaProfesorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.userForm_opinion.setValue({comentario:this.Profesor.comentario,puntuacion:this.Profesor.puntuacion});
     this.imagen=this.url_imagen(this.Profesor.imagen);
     if (this.Profesor.estado==0){
@@ -36,13 +35,14 @@ export class CartaProfesorComponent implements OnInit {
       this.comentar="No has sido aceptado";
     }
   }
-
+  //Esta funcion obtiene la url de la imagen de un usuario
   url_imagen(id_imagen:string):string{
     if(id_imagen==null){
       return "./assets/images/blanco.png";
     }
     return environment.API_URL+"/images/avatars/"+id_imagen;
   }
+  //Esta funcion registra la opinion de un usuario
   async getDataForm():Promise<void>{
     let datos2=Object.assign(this.userForm_opinion.value,{id:this.Profesor.id});
     await this.llamadasalumnos.opinar(datos2,localStorage.getItem('token'))
@@ -53,6 +53,7 @@ export class CartaProfesorComponent implements OnInit {
       this.llamadasalumnos.gestion_de_errores_opiniones(err);
     })
   }
+  //Esta funcion comprueba si la opinion y puntuacion de un usuario es valida
   opinion_valida():void{
     let comentario=this.userForm_opinion.get('comentario')?.value;
     let puntuacion=this.userForm_opinion.get('puntuacion')?.value;
@@ -74,4 +75,5 @@ export class CartaProfesorComponent implements OnInit {
       this.aceptado=true;
     }
   }
+  
 }

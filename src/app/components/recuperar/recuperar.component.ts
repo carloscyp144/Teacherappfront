@@ -22,7 +22,7 @@ export class RecuperarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  //Funcion para recuperar la contraseña
   async recuperar(): Promise<void> {
     let User = this.userForm_recuperar.value;
     await this.loginService.recuperar_contra(User)
@@ -30,6 +30,7 @@ export class RecuperarComponent implements OnInit {
         Swal.fire('Correcto', 'Usuario aceptado', 'success');
       })
       .catch(err=>{
+        this.loginService.gestion_de_errores_recuperar(err);
       });
   }
 

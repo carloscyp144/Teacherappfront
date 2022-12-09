@@ -109,4 +109,20 @@ export class PerfilProfesService {
       Swal.fire('', 'Se ha producido algun tipo de error', 'error');
     }
   }
+  gestion_de_errores_alumnos(err:any):void{
+    if(err.status){
+      if(err.status==400){
+        Swal.fire('', 'Alguno de los campos enviados es incorrecto', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'Se ha producido algún error en el servidor', 'error');
+      }
+      else{
+        Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+      }
+    }
+    else{
+      Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+    }
+  }
 }

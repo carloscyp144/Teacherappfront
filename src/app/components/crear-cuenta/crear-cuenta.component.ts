@@ -13,11 +13,12 @@ export class CrearCuentaComponent implements OnInit {
     this.opcion_alumno_profe='¿Eres profesor o alumno?';
     
   }
-  opcion_profesor():boolean {
-    return this.opcion_alumno_profe=="Profesor";
-  }
 
   ngOnInit(): void {
+  }
+  //Esta funcion comprueba si el usuario a registrar es un alumno o un profesor
+  opcion_profesor():boolean {
+    return this.opcion_alumno_profe=="Profesor";
   }
   
 }

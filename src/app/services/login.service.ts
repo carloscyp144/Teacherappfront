@@ -89,4 +89,27 @@ export class LoginService {
     }
   }
 
+  gestion_de_errores_recuperar(err:any):void{
+    if(err.status){
+      if(err.status==401){
+        Swal.fire('', 'Alguno de los campos enviados es incorrecto', 'error');
+      }
+      else if(err.status==401){
+        Swal.fire('', 'No hay ningún usuario con ese email', 'error');
+      }
+      else if(err.status==500){
+        Swal.fire('', 'Se ha producido algún error en el servidor', 'error');
+      }
+      else if(err.status==503){
+        Swal.fire('', 'No está configurado el envío de correos electrónicos en el servidor', 'error');
+      }
+      else{
+        Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+      }
+    }
+    else{
+      Swal.fire('', 'Se ha producido algun tipo de error', 'error');
+    }
+  }
+
 }

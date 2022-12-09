@@ -16,10 +16,12 @@ export class AlumnoOpinarComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.llamadas_alumnos.profesores(localStorage.getItem('token'))
-    .then(response=>{
+    .then((response:any)=>{
       this.arrprofes=response.rows;
     })
-    .catch(err=>{})
+    .catch((err:any)=>{
+      this.llamadas_alumnos.gestion_de_errores_profesores(err);
+    });
   }
-
+  
 }

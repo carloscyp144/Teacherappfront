@@ -19,7 +19,9 @@ export class ProfesorAlumnosComponent implements OnInit {
     .then(response=>{
       this.arralumnos=response.rows;
     })
-    .catch(err=>{})
+    .catch(err=>{
+      this.llamadas_profesores.gestion_de_errores_alumnos(err);
+    });
   }
 
 }

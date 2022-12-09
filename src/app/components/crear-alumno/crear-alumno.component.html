@@ -33,6 +33,7 @@
 
     <div class="boton">
         <button type="submit" class="btn btn-primary mt-3 ms-3 me-3 mb-3" [disabled]="!userForm_alumno.valid">{{crear_modificar}}</button>
+        
         <div *ngIf=!es_modificar>
             <button type="reset" class="btn btn-danger mt-3 ms-3 me-3 mb-3">Borrar datos</button>
         </div>

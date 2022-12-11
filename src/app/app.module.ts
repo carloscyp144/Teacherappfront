@@ -28,6 +28,7 @@ import { CartaProfesorComponent } from './components/carta-profesor/carta-profes
 import { PanelAlumnosComponent } from './components/panel-alumnos/panel-alumnos.component';
 import { InfoProfesorComponent } from './components/info-profesor/info-profesor.component';
 import { AdminPerfilComponent } from './components/admin-perfil/admin-perfil.component';
+import { ChatComponent } from './components/chat/chat.component';
 // Pipes
 import { FormatoMedidasPipe } from './pipes/formato-medidas.pipe';
 // Entorno
@@ -61,6 +62,7 @@ import { RecuperarComponent } from './components/recuperar/recuperar.component';
     InfoProfesorComponent,
     AdminPerfilComponent,
     RecuperarComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

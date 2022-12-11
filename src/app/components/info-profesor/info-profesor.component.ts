@@ -4,6 +4,7 @@ import { InscripcionesService } from 'src/app/services/inscripciones.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { OpinionesService } from 'src/app/services/opiniones.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { environment } from 'src/environments/environment';
 
 import Swal from'sweetalert2';
 
@@ -130,6 +131,10 @@ export class InfoProfesorComponent implements OnInit {
           'error'
         );
       });
+  }
+
+  getUserImage(profesor: any): string {
+    return profesor?.imagen ? `${environment.API_URL}/images/avatars/${profesor.imagen}` : 'https://eu.ui-avatars.com/api/?name='+profesor?.nombreCompleto+'&size=250' ;
   }
 
 }

@@ -17,6 +17,7 @@ import { AlumnoGuard } from './guards/alumno.guard';
 import { ProfesorGuard } from './guards/profesor.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { RecuperarComponent } from './components/recuperar/recuperar.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: "TeacherApp/admin/profesores", component: PanelProfesoresComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/admin/alumnos", component: PanelAlumnosComponent, canActivate: [AdminGuard] },
   { path: "TeacherApp/recuperar_password", component: RecuperarComponent },
+  { path: "TeacherApp/chat", component: ChatComponent },
   { path: "**", redirectTo: "home" }
 ];
 

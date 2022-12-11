@@ -2,7 +2,7 @@
   <div class="row pb-5" *ngIf="profesor">
 
     <div class="d-flex flex-column col-12 col-md-6 col-lg-4">
-      <img class="img-profesor rounded rounded-circle p-3" [src]="profesor.imagen || 'https://eu.ui-avatars.com/api/?name='+profesor.nombreCompleto+'&size=250'" [alt]="profesor.nombreCompleto">
+      <img class="img-profesor rounded rounded-circle p-3" [src]="getUserImage(profesor)" [alt]="profesor.nombreCompleto">
       <button class="btn btn-primary mt-3" (click)="inscribirse()" [disabled]="btnInscribirseEnable">{{ btnInscribirseTxt }}</button>
     </div>
 

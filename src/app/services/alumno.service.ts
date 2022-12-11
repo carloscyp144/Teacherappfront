@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from "src/environments/environment";
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AlumnoService {
   base_url: string = environment.API_URL;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
   ) { }
 
   configHeaders() {
@@ -20,8 +22,12 @@ export class AlumnoService {
     return headers;
   }
 
-  getAll(body: any): Promise<any> {
+  getAll(body: any, token: boolean = false): Promise<any> {
     let headers = this.configHeaders();
+    if (token) {
+      let localStorage: any = this.localStorageService.getData();
+      headers = headers.set('Authorization', localStorage.token);
+    }
     return lastValueFrom(this.http.post<any>(`${this.base_url}/api/private/alumnos/getSearch/`, body,{ headers }));
   }
 

@@ -26,12 +26,12 @@ export class CabeceraComponent implements OnInit {
     { type: 'alumno', options: [
       { type: 'link', name: 'Perfil', link: 'TeacherApp/alumno/perfil'},
       { type: 'link', name: 'Opinar', link: 'TeacherApp/alumno/opinar'},
-      { type: 'link', name: 'Mensajes', link: ''}
+      { type: 'link', name: 'Mensajes', link: 'TeacherApp/chat'}
     ]  },
     { type: 'profesor', options: [
       { type: 'link', name: 'Perfil', link: 'TeacherApp/profesor/perfil'},
       { type: 'link', name: 'Alumnos', link: 'TeacherApp/profesor/alumnos'},
-      { type: 'link', name: 'Mensajes', link: ''}
+      { type: 'link', name: 'Mensajes', link: 'TeacherApp/chat'}
     ] }
   ]
 

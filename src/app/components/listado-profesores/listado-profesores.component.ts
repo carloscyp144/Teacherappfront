@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-listado-profesores',
@@ -16,13 +16,11 @@ export class ListadoProfesoresComponent implements OnInit {
   email: string | null = null;
 
   constructor(
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
     this.getLocalStorage();
-    console.log(this.token);
   }
 
   getLocalStorage(): void {
@@ -32,6 +30,10 @@ export class ListadoProfesoresComponent implements OnInit {
       this.rolId = localStorage.rolId;
       this.email = localStorage.email;
     }
+  }
+
+  getUserImage(profesor: any): string {
+    return profesor?.imagen ? `${environment.API_URL}/images/avatars/${profesor.imagen}` : 'https://eu.ui-avatars.com/api/?name='+profesor?.nombreCompleto+'&size=250' ;
   }
 
 }

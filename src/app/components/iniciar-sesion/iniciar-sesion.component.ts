@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -13,54 +11,27 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class IniciarSesionComponent implements OnInit {
 
   userForm_inicio: FormGroup;
-  error: String = '';
 
   constructor(
-    private loginService:LoginService,
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private loginService:LoginService
   ) {
     this.userForm_inicio = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      contra: new FormControl('', [Validators.required]),
+      email:new FormControl('',[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
+      password:new FormControl('',[Validators.required,Validators.minLength(6)]),
     });
   }
 
   ngOnInit(): void {
-
   }
-
+  //Funcion para logearse al iniciar sesion
   async logearse(): Promise<void> {
     let User = this.userForm_inicio.value;
-    let inicio = {
-      email: User.email,
-      password: User.contra
-    }
-    await this.loginService.login_user(inicio)
+    await this.loginService.login_user(User)
       .then(response => {
-        let rolId, email;
-        if (response.admin) {
-          rolId = response.admin.rolId;
-          email = response.admin.email;
-        } else if (response.alumno) {
-          rolId = response.alumno.rolId;
-          email = response.alumno.email;
-        } else if(response.profesor){
-          rolId = response.profesor.rolId;
-          email = response.profesor.email;
-        }
-        this.localStorageService.saveData(response.token, rolId, email);
-        window.location.href = '/TeacherApp/buscador';
+        this.loginService.gestion_de_login(response);
       })
-      .catch(err => {
-        if (err.error.errorMessage) {
-          this.error = err.error.errorMessage;
-        } else if (err.error.password.msg) {
-          this.error = err.error.password.msg;
-        } else {
-          this.error = err;
-        }
-        console.log(this.error);
+      .catch(err=>{
+        this.loginService.gestion_de_errores_login(err);
       });
   }
 

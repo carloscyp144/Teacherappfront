@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PerfilAlumnosService } from 'src/app/services/perfil-alumnos.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-crear-alumno',
@@ -15,12 +17,15 @@ export class CrearAlumnoComponent implements OnInit {
   userForm_alumno:FormGroup;
   crear_modificar:String;
   es_modificar:boolean;
+  image: any;
+  contra: string="";
+  imagen:string="";
 
   constructor(
-    private activatedRoute:ActivatedRoute,
     private router:Router,
     private llamadasalumnos:PerfilAlumnosService,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private usuarioService:UsuarioService
   ) {
     this.crear_modificar='Crear cuenta';
     this.es_modificar=false;
@@ -29,7 +34,7 @@ export class CrearAlumnoComponent implements OnInit {
       nombreCompleto:new FormControl('',[Validators.required]),
       imagen:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
-      password:new FormControl('',[Validators.required]),
+      password:new FormControl('',[Validators.required,Validators.minLength(6)]),
     });
 
   }
@@ -46,7 +51,6 @@ export class CrearAlumnoComponent implements OnInit {
   }
   //Funcion para crear un alumno o modificar sus datos
   async getDataForm():Promise<void>{
-    console.log(this.userForm_alumno.value);
     if(this.router.url=='/TeacherApp/crear_cuenta'){
       this.crear_alumno(this.userForm_alumno.value);
     }
@@ -61,7 +65,9 @@ export class CrearAlumnoComponent implements OnInit {
     .then((response:any)=>{
       this.logearse({email:datos.email,password:datos.password});
     })
-    .catch((err: any)=>{console.log(err);})
+    .catch((err: any)=>{
+      this.loginService.gestion_de_errores_crear_modificar(err);
+    })
   }
   //Funcion auxiliar para modificar datos
   async modificar_alumno(datos:any){
@@ -70,10 +76,13 @@ export class CrearAlumnoComponent implements OnInit {
     let datos2=Object.assign(datos,{email:email,userName:userName});
     await this.llamadasalumnos.mod_datos(datos2,localStorage.getItem('token'))
       .then((response: any)=>{
-        console.log(response);
+        this.guardaImagen();
         Swal.fire('Correcto', 'Usuario modificado', 'success');
+        window.location.reload();
       })
-      .catch((err: any)=>{console.log(err);})
+      .catch((err: any)=>{
+        this.loginService.gestion_de_errores_crear_modificar(err);
+      })
   }
   //Funcion para dibujar los datos de un usuario al acceder a su perfil
   async datos():Promise<void> {
@@ -82,27 +91,72 @@ export class CrearAlumnoComponent implements OnInit {
       this.userForm_alumno=new FormGroup({
         userName:new FormControl(response.alumno.userName,[Validators.required]),
         nombreCompleto:new FormControl(response.alumno.nombreCompleto,[Validators.required]),
-        imagen:new FormControl('',[Validators.required]),
+        imagen:new FormControl('',[]),
         email:new FormControl(response.alumno.email,[Validators.required,Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,20}$/)]),
-        password:new FormControl('',[Validators.required]),
+        password:new FormControl('',[]),
       });
       this.userForm_alumno.get('userName')?.disable();
       this.userForm_alumno.get('email')?.disable();
+      this.imagen=this.url_imagen(response.alumno.imagen);
     })
-    .catch((err: any)=>{})
+    .catch((err: any)=>{
+      this.llamadasalumnos.gestion_de_errores_datos_alumnos(err);
+    })
   }
   //Funcion para logearse al crear la cuenta
   async logearse(inicio:any):Promise<void>{
     await this.loginService.login_user(inicio)
-    .then(response=>{
-      console.log(response);
-      localStorage.setItem('token',response.token);
-      localStorage.setItem('rolId',"2");
-      localStorage.setItem('email',response.alumno.email);
-      localStorage.setItem('id',response.alumno.usuarioId);
-      this.router.navigate(['TeacherApp/alumno/perfil']);
-    })
-    .catch(err=>{console.log(err)})
+      .then((response: any) => {
+        localStorage.setItem('token', response.token);
+        this.guardaImagen();
+        this.loginService.gestion_de_login(response);
+      })
+      .catch((err: any)=>{
+        this.loginService.gestion_de_errores_login(err);
+      });
   }
+  //Funcion auxiliar para guardar la imagen de un usuario
+  fileChoosen(event: any) {
+    if(event.target.value) {
+      this.image = <File>event.target.files[0];
+    }
+  }
+  //Funcion para guardar la imagen de un usuario
+  async guardaImagen() {
+    if(this.image) {
+      try {
+        let fd = new FormData();
+        if(this.image) {
+          fd.append('imagen', this.image, this.image.name);
+          await this.usuarioService.changeImageUser(fd);
+        }
+      } catch(err) {
+        Swal.fire('Error imagen', 'Se produjo un error al guardar tu imagen', 'error');
+      };
+    }
+  }
+  //Esta funcion obtiene la url de la imagen de un usuario
+  url_imagen(id_imagen:string):string{
+    if(id_imagen==null){
+      return "./assets/images/blanco.png";
+    }
+    return environment.API_URL+"/images/avatars/"+id_imagen;
+  }
+  //Esta funcion permite modificar la contraseña de un usuario
+  async modificar_contra():Promise<void>{
+    if(this.contra.length<6){
+      Swal.fire('No valido', 'La contraseña debe tener al menos 6 caracteres', 'error');
+    }
+    else{
+      await this.usuarioService.changePasswordUser(this.contra)
+      .then(reponse=>{
+        Swal.fire('Correcto', 'Contraseña modificada', 'success');
+        window.location.reload();
+      })
+      .catch(err=>{
+        this.usuarioService.gestion_de_errores_cambiar_contra(err);
+      });
+    }
+  }
+  
 }
-

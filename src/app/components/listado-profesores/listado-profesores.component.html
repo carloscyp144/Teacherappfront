@@ -10,7 +10,7 @@
       <h5 class="card-header">{{ profesor.nombreCompleto}}</h5>
 
       <div class="mx-auto pt-3">
-        <img with="100px" class="img-profesor rounded rounded-circle" [src]="profesor.imagen || 'https://eu.ui-avatars.com/api/?name='+profesor.nombreCompleto+'&size=250'" [alt]="profesor.nombreCompleto">
+        <img with="100px" class="img-profesor rounded rounded-circle" [src]="getUserImage(profesor)" [alt]="profesor.nombreCompleto">
       </div>
 
       <div class="card-body">

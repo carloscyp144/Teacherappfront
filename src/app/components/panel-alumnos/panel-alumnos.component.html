@@ -52,10 +52,15 @@
       <tr *ngFor="let alumno of tablaAlumnos">
         <td>{{ alumno.id }}</td>
         <td>{{ alumno.nombreCompleto }}</td>
-        <td>{{ alumno.usuario }}</td>
-        <td>{{ alumno.correo }}</td>
+        <td>{{ alumno.userName }}</td>
+        <td>{{ alumno.email }}</td>
         <td>
-          <button class="btn btn-sm btn-danger button-table" type="button" (click)="deleteUser(alumno.id)"></button>
+          <button class="btn btn-sm btn-danger button-table" type="button" (click)="deleteUser(alumno.id)" *ngIf="alumno.borrado === 0">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <button class="btn btn-sm btn-success button-table" type="button" (click)="activateUser(alumno.id)" *ngIf="alumno.borrado === 1">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
         </td>
       </tr>
     </tbody>

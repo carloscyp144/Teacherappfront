@@ -23,7 +23,7 @@ export class PanelAlumnosComponent implements OnInit {
   }
 
   async obtenerAlumnos() {
-    let response: any = await this.alumnoService.getAll({});
+    let response: any = await this.alumnoService.getAll({}, true);
     this.alumnos = response.rows;
     this.busquedaAlumnos = this.alumnos;
     this.ultimaPagina = Math.ceil(this.alumnos.length / 10);
@@ -50,6 +50,20 @@ export class PanelAlumnosComponent implements OnInit {
 
   deleteUser(alumnoId: any){
     this.alumnoService.deleteUser(alumnoId);
+    for(let i = 0; i < this.tablaAlumnos.length; i++) {
+      if(this.tablaAlumnos[i].id === alumnoId) {
+        this.tablaAlumnos[i].borrado = 1;
+      }
+    }
+  }
+
+  activateUser(alumnoId: any){
+    this.alumnoService.activateUser(alumnoId);
+    for(let i = 0; i < this.tablaAlumnos.length; i++) {
+      if(this.tablaAlumnos[i].id === alumnoId) {
+        this.tablaAlumnos[i].borrado = 0;
+      }
+    }
   }
 
 }

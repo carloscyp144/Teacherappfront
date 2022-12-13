@@ -33,7 +33,16 @@ export class AlumnoService {
 
   deleteUser(alumnoId: number){
     let headers = this.configHeaders();
-    return lastValueFrom(this.http.delete<any>(`${this.base_url}/api/private/alumnos/${alumnoId}`, { headers }));
+    let localStorage: any = this.localStorageService.getData();
+    headers = headers.set('Authorization', localStorage.token);
+    return lastValueFrom(this.http.delete<any>(`${this.base_url}/api/private/alumnos/delete/${alumnoId}`, { headers }));
+  }
+
+  activateUser(alumnoId: number){
+    let headers = this.configHeaders();
+    let localStorage: any = this.localStorageService.getData();
+    headers = headers.set('Authorization', localStorage.token);
+    return lastValueFrom(this.http.put<any>(`${this.base_url}/api/private/alumnos/undelete/${alumnoId}`, {}, { headers }));
   }
   
 }
